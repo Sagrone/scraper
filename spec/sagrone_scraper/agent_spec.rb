@@ -19,4 +19,11 @@ RSpec.describe SagroneScraper::Agent do
     it { should respond_to(:get) }
     it { expect(subject.user_agent).to match /Mozilla\/5\.0/ }
   end
+
+  describe '#http_client' do
+    let(:agent) { described_class.new }
+
+    it { expect(agent.http_client).to be_a(Mechanize) }
+    it { expect(agent.http_client).to equal(agent.http_client) }
+  end
 end
