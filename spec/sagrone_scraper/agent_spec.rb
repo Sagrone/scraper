@@ -21,9 +21,16 @@ RSpec.describe SagroneScraper::Agent do
   end
 
   describe '#http_client' do
-    let(:agent) { described_class.new }
+    let(:agent) { described_class.new('http://example.com') }
 
     it { expect(agent.http_client).to be_a(Mechanize) }
     it { expect(agent.http_client).to equal(agent.http_client) }
+  end
+
+  describe '#initialize' do
+    let(:agent) { described_class.new('http://example.com') }
+
+    it { expect { agent }.to_not raise_error }
+    it { expect(agent.url).to eq('http://example.com') }
   end
 end

@@ -4,6 +4,12 @@ module SagroneScraper
   class Agent
     AGENT_ALIASES = ["Linux Firefox", "Linux Mozilla", "Mac Firefox", "Mac Mozilla", "Mac Safari", "Windows Chrome", "Windows IE 8", "Windows IE 9", "Windows Mozilla"]
 
+    attr_reader :url
+
+    def initialize(url)
+      @url = url
+    end
+
     def http_client
       @http_client ||= self.class.http_client
     end
