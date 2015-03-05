@@ -1,0 +1,8 @@
+/bin/
+/.bundle/
+/vendor/bundle
+/Gemfile.lock
+/coverage/
+/doc/
+/spec/reports/
+/tmp/
