@@ -20,17 +20,21 @@ RSpec.describe SagroneScraper::Agent do
     it { expect(subject.user_agent).to match /Mozilla\/5\.0/ }
   end
 
-  describe '#http_client' do
+  context 'agent initialization with example url' do
+    before do
+      stub_request_for('http://example.com', 'www.example.com')
+    end
+
     let(:agent) { described_class.new('http://example.com') }
 
-    it { expect(agent.http_client).to be_a(Mechanize) }
-    it { expect(agent.http_client).to equal(agent.http_client) }
-  end
+    describe '#http_client' do
+      it { expect(agent.http_client).to be_a(Mechanize) }
+      it { expect(agent.http_client).to equal(agent.http_client) }
+    end
 
-  describe '#initialize' do
-    let(:agent) { described_class.new('http://example.com') }
-
-    it { expect { agent }.to_not raise_error }
-    it { expect(agent.url).to eq('http://example.com') }
+    describe '#initialize' do
+      it { expect { agent }.to_not raise_error }
+      it { expect(agent.url).to eq('http://example.com') }
+    end
   end
 end
