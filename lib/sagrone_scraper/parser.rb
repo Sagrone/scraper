@@ -11,5 +11,9 @@ module SagroneScraper
                 raise Error.new('Option "page" must be provided.')
               end
     end
+
+    def parse_page!
+      nil
+    end
   end
 end
