@@ -3,7 +3,7 @@
 [![Gem Version](https://badge.fury.io/rb/sagrone_scraper.svg)](http://badge.fury.io/rb/sagrone_scraper)
 [![Build Status](https://travis-ci.org/Sagrone/scraper.svg?branch=master)](https://travis-ci.org/Sagrone/scraper)
 
-Simple library to scrap web pages. Bellow you will find information on [how to use it](#usage).
+Simple library to scrap web pages. Bellow you will find information on [how to use it](#basic-usage).
 
 ## Table of Contents
 
