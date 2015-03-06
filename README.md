@@ -4,6 +4,14 @@
 
 Simple library to scrap web pages. Bellow you will find information on [how to use it](#usage).
 
+## Table of Contents
+
+- [Installation](#installation)
+- [Basic Usage](#basic-usage)
+- [Modules](#modules)
+  + [`SagroneScraper::Agent`](#sagronescraperagent)
+  + [`SagroneScraper::Parser`](#sagronescraperparser)
+
 ## Installation
 
 Add this line to your application's Gemfile:
@@ -18,13 +26,15 @@ Or install it yourself as:
 
     $ gem install sagrone_scraper
 
-## Usage
+## Basic Usage
+
+Comming soon...
+
+## Modules
 
 #### `SagroneScraper::Agent`
 
-The agent is responsible for scraping a web page from a URL.
-
-Here is how you can create an `agent`:
+The agent is responsible for scraping a web page from a URL. Here is how you can create an `agent`:
 
 1. one way is to pass it a `url` option
 
