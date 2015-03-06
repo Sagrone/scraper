@@ -10,6 +10,10 @@ module SagroneScraper
       @url = url
     end
 
+    def page
+      @page ||= http_client.get(url)
+    end
+
     def http_client
       @http_client ||= self.class.http_client
     end

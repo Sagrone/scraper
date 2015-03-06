@@ -36,5 +36,10 @@ RSpec.describe SagroneScraper::Agent do
       it { expect { agent }.to_not raise_error }
       it { expect(agent.url).to eq('http://example.com') }
     end
+
+    describe '#page' do
+      it { expect(agent.page).to be_a(Mechanize::Page) }
+      it { expect(agent.page).to equal(agent.page) }
+    end
   end
 end
