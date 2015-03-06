@@ -8,8 +8,8 @@ module SagroneScraper
 
     attr_reader :url, :page
 
-    def initialize(url)
-      @url = url
+    def initialize(options = {})
+      @url = options[:url]
       @page = http_client.get(url)
     rescue StandardError => error
       raise Error.new(error.message)

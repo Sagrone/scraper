@@ -22,7 +22,7 @@ RSpec.describe SagroneScraper::Agent do
 
   describe '#initialize' do
     describe 'with invalid URL' do
-      let(:agent) { described_class.new(@invalid_url) }
+      let(:agent) { described_class.new(url: @invalid_url) }
 
       it 'should require URL is absolute' do
         @invalid_url = 'not-a-url'
@@ -55,7 +55,7 @@ RSpec.describe SagroneScraper::Agent do
         stub_request_for('http://example.com', 'www.example.com')
       end
 
-      let(:agent) { described_class.new('http://example.com') }
+      let(:agent) { described_class.new(url: 'http://example.com') }
 
       it { expect(agent.http_client).to be_a(Mechanize) }
       it { expect(agent.http_client).to equal(agent.http_client) }
