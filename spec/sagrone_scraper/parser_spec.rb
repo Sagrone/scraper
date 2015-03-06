@@ -42,17 +42,18 @@ RSpec.describe SagroneScraper::Parser do
 
     let(:page) { Mechanize.new.get('https://twitter.com/Milano_JS') }
     let(:twitter_parser) { TwitterParser.new(page: page) }
+    let(:expected_attributes) do
+      {
+        bio: "Javascript User Group Milano #milanojs",
+        location: "Milan, Italy"
+      }
+    end
 
     describe 'should be able to parse page without errors' do
       it { expect { twitter_parser.parse_page! }.to_not raise_error }
     end
 
     it 'should have attributes present after parsing' do
-      expected_attributes = {
-        bio: "Javascript User Group Milano #milanojs",
-        location: "Milan, Italy"
-      }
-
       twitter_parser.parse_page!
 
       expect(twitter_parser.attributes).to_not be_empty
@@ -60,11 +61,6 @@ RSpec.describe SagroneScraper::Parser do
     end
 
     it 'should have correct attributes event if parsing is done multiple times' do
-      expected_attributes = {
-        bio: "Javascript User Group Milano #milanojs",
-        location: "Milan, Italy"
-      }
-
       twitter_parser.parse_page!
       twitter_parser.parse_page!
       twitter_parser.parse_page!
