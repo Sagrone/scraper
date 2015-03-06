@@ -9,6 +9,8 @@ module SagroneScraper
     attr_reader :url, :page
 
     def initialize(options = {})
+      raise Error.new('Exactly one option must be provided: "url" or "page"') unless exactly_one_of(options)
+
       @url, @page = options[:url], options[:page]
 
       @url ||= page_url
@@ -32,6 +34,13 @@ module SagroneScraper
 
     def page_url
       @page.uri.to_s
+    end
+
+    def exactly_one_of(options)
+      url_present = !!options[:url]
+      page_present = !!options[:page]
+
+      (url_present && !page_present) || (!url_present && page_present)
     end
   end
 end

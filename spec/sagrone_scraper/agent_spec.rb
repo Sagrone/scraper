@@ -21,6 +21,26 @@ RSpec.describe SagroneScraper::Agent do
   end
 
   describe '#initialize' do
+    describe 'should require exactly one of `url` or `page` option' do
+      before do
+        stub_request_for('http://example.com', 'www.example.com')
+      end
+
+      it 'when options is empty' do
+        expect { described_class.new }.to raise_error(SagroneScraper::Agent::Error,
+                                                      /Exactly one option must be provided: "url" or "page"/)
+      end
+
+      it 'when both options are present' do
+        page = Mechanize.new.get('http://example.com')
+
+        expect {
+          described_class.new(url: 'http://example.com', page: page)
+        }.to raise_error(SagroneScraper::Agent::Error,
+                          /Exactly one option must be provided: "url" or "page"/)
+      end
+    end
+
     describe 'with page option' do
       before do
         stub_request_for('http://example.com', 'www.example.com')
