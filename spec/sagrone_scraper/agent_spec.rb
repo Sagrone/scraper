@@ -78,7 +78,7 @@ RSpec.describe SagroneScraper::Agent do
 
         webmock_allow do
           expect { agent }.to raise_error(SagroneScraper::Agent::Error,
-                                          /getaddrinfo: nodename nor servname provided, or not known/)
+                                          /getaddrinfo/)
         end
       end
     end
