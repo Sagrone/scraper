@@ -1,6 +1,6 @@
 # SagroneScraper
 
-TODO: Write a gem description
+Simple library to scrap web pages. Bellow you will find information on [how to use it](#usage).
 
 ## Installation
 
