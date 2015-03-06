@@ -17,7 +17,7 @@ RSpec.describe SagroneScraper::Agent do
 
     it { should be_a(Mechanize) }
     it { should respond_to(:get) }
-    it { expect(subject.user_agent).to match /Mozilla\/5\.0/ }
+    it { expect(subject.user_agent).to match(/Mozilla\/5\.0/) }
   end
 
   context 'agent initialization with example url' do
