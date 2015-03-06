@@ -21,7 +21,36 @@ RSpec.describe SagroneScraper::Agent do
   end
 
   describe '#initialize' do
-    describe 'with valid url' do
+    describe 'with invalid URL' do
+      let(:agent) { described_class.new(@invalid_url) }
+
+      it 'should require URL is absolute' do
+        @invalid_url = 'not-a-url'
+
+        expect { agent }.to raise_error(SagroneScraper::Agent::Error,
+                                        /absolute URL needed \(not not-a-url\)/)
+      end
+
+      it 'should require absolute path' do
+        @invalid_url = 'http://'
+
+        webmock_allow do
+          expect { agent }.to raise_error(SagroneScraper::Agent::Error,
+                                          /bad URI\(absolute but no path\)/)
+        end
+      end
+
+      it 'should require valid URL' do
+        @invalid_url = 'http://example'
+
+        webmock_allow do
+          expect { agent }.to raise_error(SagroneScraper::Agent::Error,
+                                          /getaddrinfo: nodename nor servname provided, or not known/)
+        end
+      end
+    end
+
+    describe 'with valid URL' do
       before do
         stub_request_for('http://example.com', 'www.example.com')
       end

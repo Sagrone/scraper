@@ -2,16 +2,17 @@ require 'mechanize'
 
 module SagroneScraper
   class Agent
+    Error = Class.new(RuntimeError)
+
     AGENT_ALIASES = ["Linux Firefox", "Linux Mozilla", "Mac Firefox", "Mac Mozilla", "Mac Safari", "Windows Chrome", "Windows IE 8", "Windows IE 9", "Windows Mozilla"]
 
-    attr_reader :url
+    attr_reader :url, :page
 
     def initialize(url)
       @url = url
-    end
-
-    def page
-      @page ||= http_client.get(url)
+      @page = http_client.get(url)
+    rescue StandardError => error
+      raise Error.new(error.message)
     end
 
     def http_client
