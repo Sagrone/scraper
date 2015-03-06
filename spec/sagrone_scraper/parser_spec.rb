@@ -13,7 +13,6 @@ RSpec.describe SagroneScraper::Parser do
     let(:parser) { described_class.new(page: page) }
 
     describe '#page' do
-      it { expect(parser.page).to be }
       it { expect(parser.page).to be_a(Mechanize::Page) }
     end
 
