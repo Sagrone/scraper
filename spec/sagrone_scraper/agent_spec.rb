@@ -21,6 +21,19 @@ RSpec.describe SagroneScraper::Agent do
   end
 
   describe '#initialize' do
+    describe 'with page option' do
+      before do
+        stub_request_for('http://example.com', 'www.example.com')
+      end
+
+      let(:page) { Mechanize.new.get('http://example.com') }
+      let(:agent) { described_class.new(page: page) }
+
+      it { expect { agent }.to_not raise_error }
+      it { expect(agent.page).to be }
+      it { expect(agent.url).to eq 'http://example.com/' }
+    end
+
     describe 'with invalid URL' do
       let(:agent) { described_class.new(url: @invalid_url) }
 

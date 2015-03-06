@@ -9,8 +9,10 @@ module SagroneScraper
     attr_reader :url, :page
 
     def initialize(options = {})
-      @url = options[:url]
-      @page = http_client.get(url)
+      @url, @page = options[:url], options[:page]
+
+      @url ||= page_url
+      @page ||= http_client.get(url)
     rescue StandardError => error
       raise Error.new(error.message)
     end
@@ -24,6 +26,12 @@ module SagroneScraper
         agent.user_agent_alias = AGENT_ALIASES.sample
         agent.max_history = 0
       end
+    end
+
+    private
+
+    def page_url
+      @page.uri.to_s
     end
   end
 end
