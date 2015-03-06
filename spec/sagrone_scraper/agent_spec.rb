@@ -40,6 +40,8 @@ RSpec.describe SagroneScraper::Agent do
     describe '#page' do
       it { expect(agent.page).to be_a(Mechanize::Page) }
       it { expect(agent.page).to equal(agent.page) }
+      it { expect(agent.page).to respond_to(:at, :body, :title) }
+      it { expect(agent.page).to respond_to(:links, :labels, :images, :image_urls, :forms) }
     end
   end
 end
