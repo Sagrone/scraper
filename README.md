@@ -6,9 +6,15 @@ Simple library to scrap web pages. Bellow you will find information on [how to u
 
 Add this line to your application's Gemfile:
 
-```ruby
-gem 'sagrone_scraper', github: 'Sagrone/scraper'
-```
+    $ gem 'sagrone_scraper'
+
+And then execute:
+
+    $ bundle
+
+Or install it yourself as:
+
+    $ gem install sagrone_scraper
 
 ## Usage
 
