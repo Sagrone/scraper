@@ -58,5 +58,19 @@ RSpec.describe SagroneScraper::Parser do
       expect(twitter_parser.attributes).to_not be_empty
       expect(twitter_parser.attributes).to eq expected_attributes
     end
+
+    it 'should have correct attributes event if parsing is done multiple times' do
+      expected_attributes = {
+        bio: "Javascript User Group Milano #milanojs",
+        location: "Milan, Italy"
+      }
+
+      twitter_parser.parse_page!
+      twitter_parser.parse_page!
+      twitter_parser.parse_page!
+
+      expect(twitter_parser.attributes).to_not be_empty
+      expect(twitter_parser.attributes).to eq expected_attributes
+    end
   end
 end
