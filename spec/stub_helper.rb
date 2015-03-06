@@ -10,6 +10,12 @@ module StubHelper
       })
   end
 
+  def webmock_allow(&block)
+    WebMock.allow_net_connect!
+    block.call
+    WebMock.disable_net_connect!
+  end
+
   def get_response_file(name)
     IO.read(File.join('spec/test_responses', "#{name}"))
   end
