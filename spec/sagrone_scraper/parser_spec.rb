@@ -8,18 +8,17 @@ RSpec.describe SagroneScraper::Parser do
     end
   end
 
-  describe '#page' do
+  describe 'instance has' do
     let(:page) { Mechanize::Page.new }
     let(:parser) { described_class.new(page: page) }
 
-    it { expect(parser.page).to be }
-    it { expect(parser.page).to be_a(Mechanize::Page) }
-  end
+    describe '#page' do
+      it { expect(parser.page).to be }
+      it { expect(parser.page).to be_a(Mechanize::Page) }
+    end
 
-  describe '#parse_page!' do
-    let(:page) { Mechanize::Page.new }
-    let(:parser) { described_class.new(page: page) }
-
-    it { expect(parser.parse_page!).to eq nil }
+    describe '#parse_page!' do
+      it { expect(parser.parse_page!).to eq nil }
+    end
   end
 end
