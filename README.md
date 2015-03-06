@@ -26,33 +26,33 @@ Here is how you can create an `agent`:
 
 1. one way is to pass it a `url` option
 
-```ruby
-    require 'sagrone_scraper/agent'
+    ```ruby
+        require 'sagrone_scraper/agent'
 
-    agent = SagroneScraper::Agent.new(url: 'https://twitter.com/Milano_JS')
-    agent.page
-    # => Mechanize::Page
+        agent = SagroneScraper::Agent.new(url: 'https://twitter.com/Milano_JS')
+        agent.page
+        # => Mechanize::Page
 
-    agent.page.at('.ProfileHeaderCard-bio').text
-    # => "Javascript User Group Milano #milanojs"
-```
+        agent.page.at('.ProfileHeaderCard-bio').text
+        # => "Javascript User Group Milano #milanojs"
+    ```
 
 2. another way is to pass a `page` option (`Mechanize::Page`)
 
-```ruby
-    require 'sagrone_scraper/agent'
+    ```ruby
+        require 'sagrone_scraper/agent'
 
-    mechanize_agent = Mechanize.new { |agent| agent.user_agent_alias = 'Linux Firefox' }
-    page = mechanize_agent.get('https://twitter.com/Milano_JS')
-    # => Mechanize::Page
+        mechanize_agent = Mechanize.new { |agent| agent.user_agent_alias = 'Linux Firefox' }
+        page = mechanize_agent.get('https://twitter.com/Milano_JS')
+        # => Mechanize::Page
 
-    agent = SagroneScraper::Agent.new(page: page)
-    agent.url
-    # => "https://twitter.com/Milano_JS"
+        agent = SagroneScraper::Agent.new(page: page)
+        agent.url
+        # => "https://twitter.com/Milano_JS"
 
-    agent.page.at('.ProfileHeaderCard-locationText').text
-    # => "Milan, Italy"
-```
+        agent.page.at('.ProfileHeaderCard-locationText').text
+        # => "Milan, Italy"
+    ```
 
 
 ## Contributing
