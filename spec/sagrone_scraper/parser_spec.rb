@@ -8,7 +8,7 @@ RSpec.describe SagroneScraper::Parser do
     end
   end
 
-  describe 'instance has' do
+  describe 'instance methods' do
     let(:page) { Mechanize::Page.new }
     let(:parser) { described_class.new(page: page) }
 
