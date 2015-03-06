@@ -20,5 +20,9 @@ RSpec.describe SagroneScraper::Parser do
     describe '#parse_page!' do
       it { expect(parser.parse_page!).to eq nil }
     end
+
+    describe '#attributes' do
+      it { expect(parser.attributes).to be_empty }
+    end
   end
 end
