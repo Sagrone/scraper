@@ -12,7 +12,42 @@ gem 'sagrone_scraper', github: 'Sagrone/scraper'
 
 ## Usage
 
-TODO: Write usage instructions here
+#### `SagroneScraper::Agent`
+
+The agent is responsible for scraping a web page from a URL.
+
+Here is how you can create an `agent`:
+
+1. one way is to pass it a `url` option
+
+    ```ruby
+        require 'sagrone_scraper/agent'
+
+        agent = SagroneScraper::Agent.new(url: 'https://twitter.com/Milano_JS')
+        agent.page
+        # => Mechanize::Page
+
+        agent.page.at('.ProfileHeaderCard-bio').text
+        # => "Javascript User Group Milano #milanojs"
+    ```
+
+2. another way is to pass a `page` option (`Mechanize::Page`)
+
+    ```ruby
+        require 'sagrone_scraper/agent'
+
+        mechanize_agent = Mechanize.new { |agent| agent.user_agent_alias = 'Linux Firefox' }
+        page = mechanize_agent.get('https://twitter.com/Milano_JS')
+        # => Mechanize::Page
+
+        agent = SagroneScraper::Agent.new(page: page)
+        agent.url
+        # => "https://twitter.com/Milano_JS"
+
+        agent.page.at('.ProfileHeaderCard-locationText').text
+        # => "Milan, Italy"
+    ```
+
 
 ## Contributing
 
