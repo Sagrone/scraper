@@ -56,6 +56,38 @@ Here is how you can create an `agent`:
     # => "Milan, Italy"
     ```
 
+#### `SagroneScraper::Parser`
+
+The _parser_ is responsible for extracting structured data from a _page_. The page can be obtained by the _agent_.
+
+Example usage:
+
+```ruby
+require 'sagrone_scraper/agent'
+require 'sagrone_scraper/parser'
+
+# 1) First define a custom parser, for example twitter.
+class TwitterParser < SagroneScraper::Parser
+  def bio
+    page.at('.ProfileHeaderCard-bio').text
+  end
+
+  def location
+    page.at('.ProfileHeaderCard-locationText').text
+  end
+end
+
+# 2) Create an agent scraper, which will give us the page to parse.
+agent = SagroneScraper::Agent.new(url: 'https://twitter.com/Milano_JS')
+
+# 3) Instantiate the parser.
+parser = TwitterParser.new(page: agent.page)
+
+# 4) Parse page and extract attributes.
+parser.parse_page!
+parser.attributes
+# => {bio: "Javascript User Group Milano #milanojs", location: "Milan, Italy"}
+```
 
 ## Contributing
 
