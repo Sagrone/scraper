@@ -105,6 +105,42 @@ parser.attributes
 # => {bio: "Javascript User Group Milano #milanojs", location: "Milan, Italy"}
 ```
 
+#### `SagroneScraper.scrape`
+
+This is the simplest way to scrape a web page:
+
+```ruby
+require 'sagrone_scraper'
+
+# 1) First we define a custom parser, for example twitter.
+class TwitterParser < SagroneScraper::Parser
+  TWITTER_PROFILE_URL = /^https?:\/\/twitter.com\/(\w)+\/?$/i
+
+  def self.can_parse?(url)
+    url.match(TWITTER_PROFILE_URL)
+  end
+
+  def bio
+    page.at('.ProfileHeaderCard-bio').text
+  end
+
+  def location
+    page.at('.ProfileHeaderCard-locationText').text
+  end
+end
+
+# 2) We register the parser.
+SagroneScraper.register_parser('TwitterParser')
+
+# 3) We can query for registered parsers:
+SagroneScraper.registered_parsers
+# => ['TwitterParser']
+
+# 4) We can now scrape twitter URLs.
+SagroneScraper.scrape(url: 'https://twitter.com/Milano_JS')
+# => {bio: "Javascript User Group Milano #milanojs", location: "Milan, Italy"}
+```
+
 ## Contributing
 
 1. Fork it ( https://github.com/[my-github-username]/sagrone_scraper/fork )
