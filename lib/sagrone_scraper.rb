@@ -1,6 +1,9 @@
 require "sagrone_scraper/version"
+require "sagrone_scraper/parser"
 
 module SagroneScraper
+  Error = Class.new(RuntimeError)
+
   def self.version
     VERSION
   end
@@ -11,7 +14,9 @@ module SagroneScraper
 
   def self.register_parser(name)
     return if registered_parsers.include?(name)
-    return unless Object.const_get(name)
+
+    parser_class = Object.const_get(name)
+    raise Error.new("Expected parser to be a SagroneScraper::Parser.") unless parser_class.ancestors.include?(SagroneScraper::Parser)
 
     registered_parsers.push(name)
   end

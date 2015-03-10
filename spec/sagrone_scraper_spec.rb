@@ -17,7 +17,8 @@ RSpec.describe SagroneScraper do
     end
 
     describe '.register_parser(name)' do
-      Test = Class.new
+      TestParser = Class.new(SagroneScraper::Parser)
+      NotParser = Class.new
 
       it 'should check parser name is an existing constant' do
         expect {
@@ -25,18 +26,24 @@ RSpec.describe SagroneScraper do
         }.to raise_error(NameError, 'uninitialized constant Unknown')
       end
 
-      it 'after adding a "parser" should have it registered' do
-        described_class.register_parser('Test')
+      it 'should check parser class inherits from SagroneScraper::Parser' do
+        expect {
+          described_class.register_parser('NotParser')
+        }.to raise_error(SagroneScraper::Error, 'Expected parser to be a SagroneScraper::Parser.')
+      end
 
-        expect(described_class.registered_parsers).to include('Test')
+      it 'after adding a "parser" should have it registered' do
+        described_class.register_parser('TestParser')
+
+        expect(described_class.registered_parsers).to include('TestParser')
         expect(described_class.registered_parsers.size).to eq 1
       end
 
       it 'adding same "parser" multiple times should register it once' do
-        described_class.register_parser('Test')
-        described_class.register_parser('Test')
+        described_class.register_parser('TestParser')
+        described_class.register_parser('TestParser')
 
-        expect(described_class.registered_parsers).to include('Test')
+        expect(described_class.registered_parsers).to include('TestParser')
         expect(described_class.registered_parsers.size).to eq 1
       end
     end
