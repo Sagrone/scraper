@@ -16,6 +16,11 @@ RSpec.describe SagroneScraper::Parser do
       it { expect(parser.page).to be_a(Mechanize::Page) }
     end
 
+    describe '#page_url' do
+      it { expect(parser.page_url).to be }
+      it { expect(parser.page_url).to eq page.uri.to_s }
+    end
+
     describe '#parse_page!' do
       it { expect(parser.parse_page!).to eq nil }
     end

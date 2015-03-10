@@ -4,12 +4,13 @@ module SagroneScraper
   class Parser
     Error = Class.new(RuntimeError)
 
-    attr_reader :page, :attributes
+    attr_reader :page, :page_url, :attributes
 
     def initialize(options = {})
       @page = options.fetch(:page) do
                 raise Error.new('Option "page" must be provided.')
               end
+      @page_url = @page.uri.to_s
       @attributes = {}
     end
 
