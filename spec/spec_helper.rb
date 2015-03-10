@@ -1,5 +1,7 @@
 require 'stub_helper'
 
+Dir["./spec/support/**/*.rb"].sort.each { |file| require file }
+
 RSpec.configure do |config|
   config.include(StubHelper)
 

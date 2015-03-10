@@ -49,22 +49,6 @@ RSpec.describe SagroneScraper do
     end
 
     describe '.scrape(url)' do
-      class TwitterParser < SagroneScraper::Parser
-        TWITTER_PROFILE_URL = /^https?:\/\/twitter.com\/(\w)+\/?$/i
-
-        def self.can_parse?(url)
-          url.match(TWITTER_PROFILE_URL)
-        end
-
-        def bio
-          page.at('.ProfileHeaderCard-bio').text
-        end
-
-        def location
-          page.at('.ProfileHeaderCard-locationText').text
-        end
-      end
-
       before do
         SagroneScraper.registered_parsers.clear
         SagroneScraper.register_parser('TwitterParser')

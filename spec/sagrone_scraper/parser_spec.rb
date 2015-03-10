@@ -45,22 +45,6 @@ RSpec.describe SagroneScraper::Parser do
   end
 
   describe 'create custom TwitterParser from SagroneScraper::Parser' do
-    class TwitterParser < SagroneScraper::Parser
-      TWITTER_PROFILE_URL = /^https?:\/\/twitter.com\/(\w)+\/?$/i
-
-      def self.can_parse?(url)
-        url.match(TWITTER_PROFILE_URL)
-      end
-
-      def bio
-        page.at('.ProfileHeaderCard-bio').text
-      end
-
-      def location
-        page.at('.ProfileHeaderCard-locationText').text
-      end
-    end
-
     before do
       stub_request_for('https://twitter.com/Milano_JS', 'twitter.com:Milano_JS')
     end
