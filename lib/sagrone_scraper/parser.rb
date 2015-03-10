@@ -15,6 +15,8 @@ module SagroneScraper
     end
 
     def parse_page!
+      return unless self.class.can_parse?(page_url)
+
       self.class.method_names.each do |name|
         attributes[name] = send(name)
       end

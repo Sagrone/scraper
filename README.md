@@ -79,6 +79,12 @@ require 'sagrone_scraper/parser'
 
 # 1) First define a custom parser, for example twitter.
 class TwitterParser < SagroneScraper::Parser
+  TWITTER_PROFILE_URL = /^https?:\/\/twitter.com\/(\w)+\/?$/i
+
+  def self.can_parse?(url)
+    url.match(TWITTER_PROFILE_URL)
+  end
+
   def bio
     page.at('.ProfileHeaderCard-bio').text
   end

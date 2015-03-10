@@ -22,7 +22,11 @@ RSpec.describe SagroneScraper::Parser do
     end
 
     describe '#parse_page!' do
-      it { expect(parser.parse_page!).to eq nil }
+      it do
+        expect {
+          parser.parse_page!
+        }.to raise_error(NotImplementedError, "Expected #{described_class}.can_parse?(url) to be implemented.")
+      end
     end
 
     describe '#attributes' do
@@ -33,13 +37,21 @@ RSpec.describe SagroneScraper::Parser do
   describe 'class methods' do
     describe '.can_parse?(url)' do
       it do
-        expect { described_class.can_parse?('url') }.to raise_error(NotImplementedError, "Expected #{described_class}.can_parse?(url) to be implemented.")
+        expect {
+          described_class.can_parse?('url')
+        }.to raise_error(NotImplementedError, "Expected #{described_class}.can_parse?(url) to be implemented.")
       end
     end
   end
 
   describe 'create custom TwitterParser from SagroneScraper::Parser' do
     class TwitterParser < SagroneScraper::Parser
+      TWITTER_PROFILE_URL = /^https?:\/\/twitter.com\/(\w)+\/?$/i
+
+      def self.can_parse?(url)
+        url.match(TWITTER_PROFILE_URL)
+      end
+
       def bio
         page.at('.ProfileHeaderCard-bio').text
       end
