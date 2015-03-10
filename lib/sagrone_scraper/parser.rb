@@ -20,6 +20,11 @@ module SagroneScraper
       nil
     end
 
+    def self.can_parse?(url)
+      class_with_method = "#{self}.can_parse?(url)"
+      raise NotImplementedError.new("Expected #{class_with_method} to be implemented.")
+    end
+
     private
 
     def self.method_names

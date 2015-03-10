@@ -25,6 +25,14 @@ RSpec.describe SagroneScraper::Parser do
     end
   end
 
+  describe 'class methods' do
+    describe '.can_parse?(url)' do
+      it do
+        expect { described_class.can_parse?('url') }.to raise_error(NotImplementedError, "Expected #{described_class}.can_parse?(url) to be implemented.")
+      end
+    end
+  end
+
   describe 'create custom TwitterParser from SagroneScraper::Parser' do
     class TwitterParser < SagroneScraper::Parser
       def bio
