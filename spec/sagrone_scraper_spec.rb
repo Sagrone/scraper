@@ -47,23 +47,23 @@ RSpec.describe SagroneScraper do
         expect(described_class.registered_parsers.size).to eq 1
       end
     end
+  end
 
-    describe '.scrape(url)' do
-      before do
-        SagroneScraper.registered_parsers.clear
-        SagroneScraper.register_parser('TwitterParser')
+  describe '.scrape(url)' do
+    before do
+      SagroneScraper.registered_parsers.clear
+      SagroneScraper.register_parser('TwitterParser')
 
-        stub_request_for('https://twitter.com/Milano_JS', 'twitter.com:Milano_JS')
-      end
+      stub_request_for('https://twitter.com/Milano_JS', 'twitter.com:Milano_JS')
+    end
 
-      it do
-        expected_attributes = {
-          bio: "Javascript User Group Milano #milanojs",
-          location: "Milan, Italy"
-        }
+    it do
+      expected_attributes = {
+        bio: "Javascript User Group Milano #milanojs",
+        location: "Milan, Italy"
+      }
 
-        expect(described_class.scrape('https://twitter.com/Milano_JS')).to eq(expected_attributes)
-      end
+      expect(described_class.scrape('https://twitter.com/Milano_JS')).to eq(expected_attributes)
     end
   end
 end
