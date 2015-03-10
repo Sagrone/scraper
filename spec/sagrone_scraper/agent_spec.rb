@@ -27,8 +27,10 @@ RSpec.describe SagroneScraper::Agent do
       end
 
       it 'when options is empty' do
-        expect { described_class.new }.to raise_error(SagroneScraper::Agent::Error,
-                                                      /Exactly one option must be provided: "url" or "page"/)
+        expect {
+          described_class.new
+        }.to raise_error(SagroneScraper::Agent::Error,
+                          'Exactly one option must be provided: "url" or "page"')
       end
 
       it 'when both options are present' do
@@ -37,7 +39,7 @@ RSpec.describe SagroneScraper::Agent do
         expect {
           described_class.new(url: 'http://example.com', page: page)
         }.to raise_error(SagroneScraper::Agent::Error,
-                          /Exactly one option must be provided: "url" or "page"/)
+                          'Exactly one option must be provided: "url" or "page"')
       end
     end
 
@@ -61,7 +63,7 @@ RSpec.describe SagroneScraper::Agent do
         @invalid_url = 'not-a-url'
 
         expect { agent }.to raise_error(SagroneScraper::Agent::Error,
-                                        /absolute URL needed \(not not-a-url\)/)
+                                        'absolute URL needed (not not-a-url)')
       end
 
       it 'should require absolute path' do
