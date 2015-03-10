@@ -17,6 +17,14 @@ RSpec.describe SagroneScraper do
     end
 
     describe '.register_parser(name)' do
+      Test = Class.new
+
+      it 'should check parser name is an existing constant' do
+        expect {
+          described_class.register_parser('Unknown')
+        }.to raise_error(NameError, 'uninitialized constant Unknown')
+      end
+
       it 'after adding a "parser" should have it registered' do
         described_class.register_parser('Test')
 

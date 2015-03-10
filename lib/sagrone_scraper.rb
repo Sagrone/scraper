@@ -11,6 +11,7 @@ module SagroneScraper
 
   def self.register_parser(name)
     return if registered_parsers.include?(name)
+    return unless Object.const_get(name)
 
     registered_parsers.push(name)
   end
