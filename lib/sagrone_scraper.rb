@@ -22,7 +22,11 @@ module SagroneScraper
     registered_parsers.push(name)
   end
 
-  def self.scrape(url)
+  def self.scrape(options)
+    url = options.fetch(:url) do
+            raise Error.new('Option "url" must be provided.')
+          end
+
     parser_class = registered_parsers
                     .map { |parser_name| Object.const_get(parser_name) }
                     .find { |parser_class| parser_class.can_parse?(url) }

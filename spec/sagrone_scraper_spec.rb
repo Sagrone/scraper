@@ -49,12 +49,18 @@ RSpec.describe SagroneScraper do
     end
   end
 
-  describe '.scrape(url)' do
+  describe '.scrape' do
     before do
       SagroneScraper.registered_parsers.clear
       SagroneScraper.register_parser('TwitterParser')
 
       stub_request_for('https://twitter.com/Milano_JS', 'twitter.com:Milano_JS')
+    end
+
+    it 'should `url` option' do
+      expect {
+        described_class.scrape({})
+      }.to raise_error(SagroneScraper::Error, 'Option "url" must be provided.')
     end
 
     it 'should scrape URL if registered parser knows how to parse it' do
@@ -63,12 +69,12 @@ RSpec.describe SagroneScraper do
         location: "Milan, Italy"
       }
 
-      expect(described_class.scrape('https://twitter.com/Milano_JS')).to eq(expected_attributes)
+      expect(described_class.scrape(url: 'https://twitter.com/Milano_JS')).to eq(expected_attributes)
     end
 
     it 'should return raise error if no registered paser can parse the URL' do
       expect {
-        described_class.scrape('https://twitter.com/Milano_JS/media')
+        described_class.scrape(url: 'https://twitter.com/Milano_JS/media')
       }.to raise_error(SagroneScraper::Error, "No registed parser can parse URL https://twitter.com/Milano_JS/media")
     end
   end
