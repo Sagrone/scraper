@@ -40,7 +40,7 @@ The agent is responsible for scraping a web page from a URL. Here is how you can
 1. one way is to pass it a `url` option
 
     ```ruby
-    require 'sagrone_scraper/agent'
+    require 'sagrone_scraper'
 
     agent = SagroneScraper::Agent.new(url: 'https://twitter.com/Milano_JS')
     agent.page
@@ -53,7 +53,7 @@ The agent is responsible for scraping a web page from a URL. Here is how you can
 2. another way is to pass a `page` option (`Mechanize::Page`)
 
     ```ruby
-    require 'sagrone_scraper/agent'
+    require 'sagrone_scraper'
 
     mechanize_agent = Mechanize.new { |agent| agent.user_agent_alias = 'Linux Firefox' }
     page = mechanize_agent.get('https://twitter.com/Milano_JS')
@@ -74,8 +74,7 @@ The _parser_ is responsible for extracting structured data from a _page_. The pa
 Example usage:
 
 ```ruby
-require 'sagrone_scraper/agent'
-require 'sagrone_scraper/parser'
+require 'sagrone_scraper'
 
 # 1) First define a custom parser, for example twitter.
 class TwitterParser < SagroneScraper::Parser
