@@ -17,6 +17,6 @@ module StubHelper
   end
 
   def get_response_file(name)
-    IO.read(File.join('spec/test_responses', "#{name}"))
+    IO.read(File.join('spec/support/test_responses', "#{name}"))
   end
 end
