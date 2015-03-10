@@ -27,7 +27,7 @@ module SagroneScraper
                     .map { |parser_name| Object.const_get(parser_name) }
                     .find { |parser_class| parser_class.can_parse?(url) }
 
-    return unless parser_class
+    raise Error.new("No registed parser can parse URL #{url}") unless parser_class
 
     agent = SagroneScraper::Agent.new(url: url)
     parser = parser_class.new(page: agent.page)

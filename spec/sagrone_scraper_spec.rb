@@ -57,13 +57,19 @@ RSpec.describe SagroneScraper do
       stub_request_for('https://twitter.com/Milano_JS', 'twitter.com:Milano_JS')
     end
 
-    it do
+    it 'should scrape URL if registered parser knows how to parse it' do
       expected_attributes = {
         bio: "Javascript User Group Milano #milanojs",
         location: "Milan, Italy"
       }
 
       expect(described_class.scrape('https://twitter.com/Milano_JS')).to eq(expected_attributes)
+    end
+
+    it 'should return raise error if no registered paser can parse the URL' do
+      expect {
+        described_class.scrape('https://twitter.com/Milano_JS/media')
+      }.to raise_error(SagroneScraper::Error, "No registed parser can parse URL https://twitter.com/Milano_JS/media")
     end
   end
 end
