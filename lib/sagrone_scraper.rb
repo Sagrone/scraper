@@ -29,7 +29,7 @@ module SagroneScraper
 
     parser_class = registered_parsers
                     .map { |parser_name| Object.const_get(parser_name) }
-                    .find { |parser_class| parser_class.can_parse?(url) }
+                    .find { |a_parser_class| a_parser_class.can_parse?(url) }
 
     raise Error.new("No registed parser can parse URL #{url}") unless parser_class
 
