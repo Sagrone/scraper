@@ -36,7 +36,6 @@ module SagroneScraper
     end
 
     def self.method_added(name)
-      puts "added #{name} to #{self}"
       method_names.push(name)
     end
 
