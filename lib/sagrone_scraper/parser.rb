@@ -1,4 +1,5 @@
 require 'mechanize'
+require 'sagrone_scraper'
 
 module SagroneScraper
   class Parser
@@ -37,6 +38,10 @@ module SagroneScraper
     def self.method_added(name)
       puts "added #{name} to #{self}"
       method_names.push(name)
+    end
+
+    def self.inherited(klass)
+      SagroneScraper.register_parser(klass.name)
     end
   end
 end

@@ -130,14 +130,11 @@ class TwitterParser < SagroneScraper::Parser
   end
 end
 
-# 2) We register the parser.
-SagroneScraper.register_parser('TwitterParser')
-
-# 3) We can query for registered parsers.
+# 2) We can query for registered parsers.
 SagroneScraper.registered_parsers
 # => ['TwitterParser']
 
-# 4) We can now scrape twitter profile URLs.
+# 3) We can now scrape twitter profile URLs.
 SagroneScraper.scrape(url: 'https://twitter.com/Milano_JS')
 # => {bio: "Javascript User Group Milano #milanojs", location: "Milan, Italy"}
 ```

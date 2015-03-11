@@ -17,8 +17,17 @@ RSpec.describe SagroneScraper do
     end
 
     describe '.register_parser(name)' do
-      TestParser = Class.new(SagroneScraper::Parser)
+      class TestParser < SagroneScraper::Parser ; end
       NotParser = Class.new
+
+      it 'should add a new parser class to registered parsers automatically' do
+        class ParserOne < SagroneScraper::Parser ; end
+        class ParserTwo < SagroneScraper::Parser ; end
+
+        expect(described_class.registered_parsers).to include('ParserOne')
+        expect(described_class.registered_parsers).to include('ParserTwo')
+        expect(described_class.registered_parsers.size).to eq(2)
+      end
 
       it 'should check parser name is an existing constant' do
         expect {
