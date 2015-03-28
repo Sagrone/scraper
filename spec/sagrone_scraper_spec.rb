@@ -17,9 +17,6 @@ RSpec.describe SagroneScraper do
     end
 
     describe '.register_parser(name)' do
-      class TestParser < SagroneScraper::Parser ; end
-      NotParser = Class.new
-
       it 'should add a new parser class to registered parsers automatically' do
         class ParserOne < SagroneScraper::Parser ; end
         class ParserTwo < SagroneScraper::Parser ; end
@@ -36,19 +33,16 @@ RSpec.describe SagroneScraper do
       end
 
       it 'should check parser class inherits from SagroneScraper::Parser' do
+        NotParser = Class.new
+
         expect {
           described_class.register_parser('NotParser')
         }.to raise_error(SagroneScraper::Error, 'Expected parser to be a SagroneScraper::Parser.')
       end
 
-      it 'after adding a "parser" should have it registered' do
-        described_class.register_parser('TestParser')
+      it 'should register multiple parsers only once' do
+        class TestParser < SagroneScraper::Parser ; end
 
-        expect(described_class.registered_parsers).to include('TestParser')
-        expect(described_class.registered_parsers.size).to eq 1
-      end
-
-      it 'adding same "parser" multiple times should register it once' do
         described_class.register_parser('TestParser')
         described_class.register_parser('TestParser')
 
