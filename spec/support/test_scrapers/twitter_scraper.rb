@@ -8,10 +8,16 @@ class TwitterScraper < SagroneScraper::Base
   end
 
   def bio
-    page.at('.ProfileHeaderCard-bio').text
+    text_at('.ProfileHeaderCard-bio')
   end
 
   def location
-    page.at('.ProfileHeaderCard-locationText').text
+    text_at('.ProfileHeaderCard-locationText')
+  end
+
+  private
+
+  def text_at(selector)
+    page.at(selector).text if page.at(selector)
   end
 end

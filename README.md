@@ -121,12 +121,22 @@ class TwitterScraper < SagroneScraper::Base
     url.match(TWITTER_PROFILE_URL)
   end
 
+  # _Public_ instance methods are used for data extraction.
+
   def bio
-    page.at('.ProfileHeaderCard-bio').text
+    text_at('.ProfileHeaderCard-bio')
   end
 
   def location
-    page.at('.ProfileHeaderCard-locationText').text
+    text_at('.ProfileHeaderCard-locationText')
+  end
+
+  private
+
+  # _Private_ instance methods are _not used_ for data extraction.
+
+  def text_at(selector)
+    page.at(selector).text if page.at(selector)
   end
 end
 

@@ -59,6 +59,27 @@ RSpec.describe SagroneScraper::Base do
         expect(can_scrape).to eq(false)
       end
     end
+
+    describe 'self.should_ignore_method?(name)' do
+      let(:private_methods) { %w(text_at) }
+      let(:public_methods) { %w(bio location) }
+
+      it 'ignores private methods' do
+        private_methods.each do |private_method|
+          ignored = TwitterScraper.should_ignore_method?(private_method)
+
+          expect(ignored).to eq(true)
+        end
+      end
+
+      it 'allows public methods' do
+        public_methods.each do |public_method|
+          ignored = TwitterScraper.should_ignore_method?(public_method)
+
+          expect(ignored).to eq(false)
+        end
+      end
+    end
   end
 
   describe 'create custom TwitterScraper from SagroneScraper::Base' do

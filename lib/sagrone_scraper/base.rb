@@ -29,6 +29,10 @@ module SagroneScraper
       raise NotImplementedError.new("Expected #{class_with_method} to be implemented.")
     end
 
+    def self.should_ignore_method?(name)
+      private_method_defined?(name)
+    end
+
     private
 
     def self.method_names
@@ -36,7 +40,7 @@ module SagroneScraper
     end
 
     def self.method_added(name)
-      method_names.push(name)
+      method_names.push(name) unless should_ignore_method?(name)
     end
 
     def self.inherited(klass)

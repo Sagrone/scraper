@@ -7,6 +7,7 @@
   - `SagroneScraper.register_parser` is now `SagroneScraper.register_scraper`
   - `SagroneScraper::Base.parse_page!` renamed to `SagroneScraper::Base.scrape_page!`
   - `SagroneScraper::Base.can_parse?` renamed to `SagroneScraper::Base.can_scrape?`
+  - `SagroneScraper::Base` _private_ instance methods are not used for extracting data, only _public_ instance methods are.
 
 ### 0.0.3
 
