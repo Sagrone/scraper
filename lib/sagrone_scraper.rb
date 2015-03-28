@@ -20,6 +20,7 @@ module SagroneScraper
     raise Error.new("Expected parser to be a SagroneScraper::Parser.") unless parser_class.ancestors.include?(SagroneScraper::Parser)
 
     registered_parsers.push(name)
+    nil
   end
 
   def self.scrape(options)
