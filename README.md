@@ -38,7 +38,7 @@ In order to scrap a web page you need to [create a new scraper class](#create-a-
 
 ## Modules
 
-#### `SagroneScraper::Agent`
+### `SagroneScraper::Agent`
 
 The agent is responsible for obtaining a page, `Mechanize::Page`, from a URL. Here is how you can create an `agent`:
 
@@ -53,7 +53,7 @@ agent.page.at('.ProfileHeaderCard-bio').text
 # => "Javascript User Group Milano #milanojs"
 ```
 
-#### `SagroneScraper::Base`
+### `SagroneScraper::Base`
 
 Here we define a `TwitterScraper`, by inheriting from `SagroneScraper::Base` class.
 
@@ -61,7 +61,7 @@ The _scraper_ is responsible for extracting structured data from a _page_ or a _
 
 _Public_ instance methods will be used to extract data, whereas _private_ instance methods will be ignored (seen as helper methods). Most importantly `self.can_scrape?(url)` class method ensures that only a known subset of pages can be scraped for data.
 
-###### Create a scraper class
+#### Create a scraper class
 
 ```ruby
 require 'sagrone_scraper'
@@ -93,7 +93,7 @@ class TwitterScraper < SagroneScraper::Base
 end
 ```
 
-###### Instantiate the scraper
+#### Instantiate the scraper
 
 ```ruby
 # Instantiate the scraper with a "url".
@@ -104,20 +104,20 @@ agent = SagroneScraper::Agent.new(url: 'https://twitter.com/Milano_JS')
 scraper = TwitterScraper.new(page: agent.page)
 ```
 
-###### Scrape the page
+#### Scrape the page
 
 ```ruby
 scraper.scrape_page!
 ```
 
-###### Extract the data
+#### Extract the data
 
 ```ruby
 scraper.attributes
 # => {bio: "Javascript User Group Milano #milanojs", location: "Milan, Italy"}
 ```
 
-#### `SagroneScraper::Collection`
+### `SagroneScraper::Collection`
 
 This is the simplest way to scrape a web page:
 
