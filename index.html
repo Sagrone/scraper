@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Sagrone Scraper by Sagrone</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">Sagrone Scraper</h1>
+      <h2 class="project-tagline">Simple library to scrap web pages.</h2>
+      <a href="https://github.com/Sagrone/scraper" class="btn">View on GitHub</a>
+      <a href="https://github.com/Sagrone/scraper/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/Sagrone/scraper/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <h1>
+<a id="sagrone-scraper" class="anchor" href="#sagrone-scraper" aria-hidden="true"><span class="octicon octicon-link"></span></a>Sagrone scraper</h1>
+
+<p>Simple library to scrap web pages. Bellow you will find information on <a href="#basic-usage">how to use it</a>.</p>
+
+<h2>
+<a id="table-of-contents" class="anchor" href="#table-of-contents" aria-hidden="true"><span class="octicon octicon-link"></span></a>Table of Contents</h2>
+
+<ul>
+<li><a href="#installation">Installation</a></li>
+<li><a href="#basic-usage">Basic Usage</a></li>
+<li>
+<a href="#modules">Modules</a>
+
+<ul>
+<li><a href="#sagronescraperagent"><code>SagroneScraper::Agent</code></a></li>
+<li>
+<a href="#sagronescraperbase"><code>SagroneScraper::Base</code></a>
+
+<ul>
+<li><a href="#create-a-scraper-class">Create a scraper class</a></li>
+<li><a href="#instantiate-the-scraper">Instantiate the scraper</a></li>
+<li><a href="#scrape-the-page">Scrape the page</a></li>
+<li><a href="#extract-the-data">Extract the data</a></li>
+</ul>
+</li>
+<li><a href="#sagronescrapercollection"><code>SagroneScraper::Collection</code></a></li>
+</ul>
+</li>
+</ul>
+
+<h2>
+<a id="installation" class="anchor" href="#installation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installation</h2>
+
+<p>Add this line to your application's Gemfile:</p>
+
+<pre><code>$ gem 'sagrone_scraper'
+</code></pre>
+
+<p>And then execute:</p>
+
+<pre><code>$ bundle
+</code></pre>
+
+<p>Or install it yourself as:</p>
+
+<pre><code>$ gem install sagrone_scraper
+</code></pre>
+
+<h2>
+<a id="basic-usage" class="anchor" href="#basic-usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Basic Usage</h2>
+
+<p>In order to scrap a web page you need to <a href="#create-a-scraper-class">create a new scraper class</a> by inheriting from <code>SagroneScraper::Base</code> and <a href="#instantiate-the-scraper">instantiate it with a <code>url</code> or <code>page</code></a>. Then you can <a href="#scrape-the-page">scrape the page</a> and <a href="#extract-the-data">extract the data</a>. More informations at <a href="#sagronescraperbase"><code>SagroneScraper::Base</code></a> module.</p>
+
+<h2>
+<a id="modules" class="anchor" href="#modules" aria-hidden="true"><span class="octicon octicon-link"></span></a>Modules</h2>
+
+<h4>
+<a id="sagronescraperagent" class="anchor" href="#sagronescraperagent" aria-hidden="true"><span class="octicon octicon-link"></span></a><code>SagroneScraper::Agent</code>
+</h4>
+
+<p>The agent is responsible for obtaining a page, <code>Mechanize::Page</code>, from a URL. Here is how you can create an <code>agent</code>:</p>
+
+<div class="highlight highlight-ruby"><pre><span class="pl-k">require</span> <span class="pl-s"><span class="pl-pds">'</span>sagrone_scraper<span class="pl-pds">'</span></span>
+
+agent <span class="pl-k">=</span> <span class="pl-c1">SagroneScraper</span>::<span class="pl-c1">Agent</span>.<span class="pl-k">new</span>(<span class="pl-c1">url:</span> <span class="pl-s"><span class="pl-pds">'</span>https://twitter.com/Milano_JS<span class="pl-pds">'</span></span>)
+agent.page
+<span class="pl-c"># =&gt; Mechanize::Page</span>
+
+agent.page.at(<span class="pl-s"><span class="pl-pds">'</span>.ProfileHeaderCard-bio<span class="pl-pds">'</span></span>).text
+<span class="pl-c"># =&gt; "Javascript User Group Milano #milanojs"</span></pre></div>
+
+<h4>
+<a id="sagronescraperbase" class="anchor" href="#sagronescraperbase" aria-hidden="true"><span class="octicon octicon-link"></span></a><code>SagroneScraper::Base</code>
+</h4>
+
+<p>Here we define a <code>TwitterScraper</code>, by inheriting from <code>SagroneScraper::Base</code> class.</p>
+
+<p>The <em>scraper</em> is responsible for extracting structured data from a <em>page</em> or a <em>url</em>. The <em>page</em> can be obtained by the <a href="#sagronescraperagent"><em>agent</em></a>.</p>
+
+<p><em>Public</em> instance methods will be used to extract data, whereas <em>private</em> instance methods will be ignored (seen as helper methods). Most importantly <code>self.can_scrape?(url)</code> class method ensures that only a known subset of pages can be scraped for data.</p>
+
+<h6>
+<a id="create-a-scraper-class" class="anchor" href="#create-a-scraper-class" aria-hidden="true"><span class="octicon octicon-link"></span></a>Create a scraper class</h6>
+
+<div class="highlight highlight-ruby"><pre><span class="pl-k">require</span> <span class="pl-s"><span class="pl-pds">'</span>sagrone_scraper<span class="pl-pds">'</span></span>
+
+<span class="pl-k">class</span> <span class="pl-en">TwitterScraper<span class="pl-e"> &lt; SagroneScraper::Base</span></span>
+  <span class="pl-c1">TWITTER_PROFILE_URL</span> <span class="pl-k">=</span> <span class="pl-sr"><span class="pl-pds">/</span>^https?:<span class="pl-cce">\/\/</span>twitter.com<span class="pl-cce">\/</span><span class="pl-sr">(<span class="pl-cce">\w</span>)</span>+<span class="pl-cce">\/</span>?$<span class="pl-pds">/i</span></span>
+
+  <span class="pl-k">def</span> <span class="pl-en">self.can_scrape?</span>(<span class="pl-smi">url</span>)
+    url.match(<span class="pl-c1">TWITTER_PROFILE_URL</span>) <span class="pl-k">?</span> <span class="pl-c1">true</span> : <span class="pl-c1">false</span>
+  <span class="pl-k">end</span>
+
+  <span class="pl-c"># Public instance methods are used for data extraction.</span>
+
+  <span class="pl-k">def</span> <span class="pl-en">bio</span>
+    text_at(<span class="pl-s"><span class="pl-pds">'</span>.ProfileHeaderCard-bio<span class="pl-pds">'</span></span>)
+  <span class="pl-k">end</span>
+
+  <span class="pl-k">def</span> <span class="pl-en">location</span>
+    text_at(<span class="pl-s"><span class="pl-pds">'</span>.ProfileHeaderCard-locationText<span class="pl-pds">'</span></span>)
+  <span class="pl-k">end</span>
+
+  <span class="pl-k">private</span>
+
+  <span class="pl-c"># Private instance methods are not used for data extraction.</span>
+
+  <span class="pl-k">def</span> <span class="pl-en">text_at</span>(<span class="pl-smi">selector</span>)
+    page.at(selector).text <span class="pl-k">if</span> page.at(selector)
+  <span class="pl-k">end</span>
+<span class="pl-k">end</span></pre></div>
+
+<h6>
+<a id="instantiate-the-scraper" class="anchor" href="#instantiate-the-scraper" aria-hidden="true"><span class="octicon octicon-link"></span></a>Instantiate the scraper</h6>
+
+<div class="highlight highlight-ruby"><pre><span class="pl-c"># Instantiate the scraper with a "url".</span>
+scraper <span class="pl-k">=</span> <span class="pl-c1">TwitterScraper</span>.<span class="pl-k">new</span>(<span class="pl-c1">url:</span> <span class="pl-s"><span class="pl-pds">'</span>https://twitter.com/Milano_JS<span class="pl-pds">'</span></span>)
+
+<span class="pl-c"># Instantiate the scraper with a "page" (Mechanize::Page).</span>
+agent <span class="pl-k">=</span> <span class="pl-c1">SagroneScraper</span>::<span class="pl-c1">Agent</span>.<span class="pl-k">new</span>(<span class="pl-c1">url:</span> <span class="pl-s"><span class="pl-pds">'</span>https://twitter.com/Milano_JS<span class="pl-pds">'</span></span>)
+scraper <span class="pl-k">=</span> <span class="pl-c1">TwitterScraper</span>.<span class="pl-k">new</span>(<span class="pl-c1">page:</span> agent.page)</pre></div>
+
+<h6>
+<a id="scrape-the-page" class="anchor" href="#scrape-the-page" aria-hidden="true"><span class="octicon octicon-link"></span></a>Scrape the page</h6>
+
+<div class="highlight highlight-ruby"><pre>scraper.scrape_page!</pre></div>
+
+<h6>
+<a id="extract-the-data" class="anchor" href="#extract-the-data" aria-hidden="true"><span class="octicon octicon-link"></span></a>Extract the data</h6>
+
+<div class="highlight highlight-ruby"><pre>scraper.attributes
+<span class="pl-c"># =&gt; {bio: "Javascript User Group Milano #milanojs", location: "Milan, Italy"}</span></pre></div>
+
+<h4>
+<a id="sagronescrapercollection" class="anchor" href="#sagronescrapercollection" aria-hidden="true"><span class="octicon octicon-link"></span></a><code>SagroneScraper::Collection</code>
+</h4>
+
+<p>This is the simplest way to scrape a web page:</p>
+
+<div class="highlight highlight-ruby"><pre><span class="pl-k">require</span> <span class="pl-s"><span class="pl-pds">'</span>sagrone_scraper<span class="pl-pds">'</span></span>
+
+<span class="pl-c"># 1) Define a scraper. For example, the TwitterScraper above.</span>
+
+<span class="pl-c"># 2) New created scrapers will be registered.</span>
+<span class="pl-c1">SagroneScraper</span>.<span class="pl-c1">Collection</span>::registered_scrapers
+<span class="pl-c"># =&gt; ['TwitterScraper']</span>
+
+<span class="pl-c"># 3) Here we use the collection to scrape data at a URL.</span>
+<span class="pl-c1">SagroneScraper</span>::<span class="pl-c1">Collection</span>.scrape(<span class="pl-c1">url:</span> <span class="pl-s"><span class="pl-pds">'</span>https://twitter.com/Milano_JS<span class="pl-pds">'</span></span>)
+<span class="pl-c"># =&gt; {bio: "Javascript User Group Milano #milanojs", location: "Milan, Italy"}</span></pre></div>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/Sagrone/scraper">Sagrone Scraper</a> is maintained by <a href="https://github.com/Sagrone">Sagrone</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+            <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-55659115-3");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+  </body>
+</html>
+
