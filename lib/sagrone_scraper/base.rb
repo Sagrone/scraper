@@ -2,7 +2,7 @@ require 'mechanize'
 require 'sagrone_scraper'
 
 module SagroneScraper
-  class Parser
+  class Base
     Error = Class.new(RuntimeError)
 
     attr_reader :page, :page_url, :attributes
@@ -40,7 +40,7 @@ module SagroneScraper
     end
 
     def self.inherited(klass)
-      SagroneScraper.register_parser(klass.name)
+      SagroneScraper.register_scraper(klass.name)
     end
   end
 end

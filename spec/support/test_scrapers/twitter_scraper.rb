@@ -1,6 +1,6 @@
-require 'sagrone_scraper/parser'
+require 'sagrone_scraper/base'
 
-class TwitterParser < SagroneScraper::Parser
+class TwitterScraper < SagroneScraper::Base
   TWITTER_PROFILE_URL = /^https?:\/\/twitter.com\/(\w)+\/?$/i
 
   def self.can_parse?(url)

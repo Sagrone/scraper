@@ -1,6 +1,6 @@
 require "sagrone_scraper/version"
 require "sagrone_scraper/agent"
-require "sagrone_scraper/parser"
+require "sagrone_scraper/base"
 
 module SagroneScraper
   Error = Class.new(RuntimeError)
@@ -9,17 +9,17 @@ module SagroneScraper
     VERSION
   end
 
-  def self.registered_parsers
-    @registered_parsers ||= []
+  def self.registered_scrapers
+    @registered_scrapers ||= []
   end
 
-  def self.register_parser(name)
-    return if registered_parsers.include?(name)
+  def self.register_scraper(name)
+    return if registered_scrapers.include?(name)
 
-    parser_class = Object.const_get(name)
-    raise Error.new("Expected parser to be a SagroneScraper::Parser.") unless parser_class.ancestors.include?(SagroneScraper::Parser)
+    scraper_class = Object.const_get(name)
+    raise Error.new("Expected scraper to be a SagroneScraper::Base.") unless scraper_class.ancestors.include?(SagroneScraper::Base)
 
-    registered_parsers.push(name)
+    registered_scrapers.push(name)
     nil
   end
 
@@ -28,15 +28,15 @@ module SagroneScraper
             raise Error.new('Option "url" must be provided.')
           end
 
-    parser_class = registered_parsers
-                    .map { |parser_name| Object.const_get(parser_name) }
-                    .find { |a_parser_class| a_parser_class.can_parse?(url) }
+    scraper_class = registered_scrapers
+                    .map { |scraper_name| Object.const_get(scraper_name) }
+                    .find { |a_scraper_class| a_scraper_class.can_parse?(url) }
 
-    raise Error.new("No registed parser can parse URL #{url}") unless parser_class
+    raise Error.new("No registed scraper can parse URL #{url}") unless scraper_class
 
     agent = SagroneScraper::Agent.new(url: url)
-    parser = parser_class.new(page: agent.page)
-    parser.parse_page!
-    parser.attributes
+    scraper = scraper_class.new(page: agent.page)
+    scraper.parse_page!
+    scraper.attributes
   end
 end

@@ -11,7 +11,7 @@ Simple library to scrap web pages. Bellow you will find information on [how to u
 - [Basic Usage](#basic-usage)
 - [Modules](#modules)
   + [`SagroneScraper::Agent`](#sagronescraperagent)
-  + [`SagroneScraper::Parser`](#sagronescraperparser)
+  + [`SagroneScraper::Base`](#sagronescraperbase)
   + [`SagroneScraper.scrape`](#sagronescraperscrape)
 
 ## Installation
@@ -68,17 +68,17 @@ The agent is responsible for scraping a web page from a URL. Here is how you can
     # => "Milan, Italy"
     ```
 
-#### `SagroneScraper::Parser`
+#### `SagroneScraper::Base`
 
-The _parser_ is responsible for extracting structured data from a _page_. The page can be obtained by the _agent_.
+The _scraper_ is responsible for extracting structured data from a _page_. The page can be obtained by the _agent_.
 
 Example usage:
 
 ```ruby
 require 'sagrone_scraper'
 
-# 1) First define a custom parser, for example twitter.
-class TwitterParser < SagroneScraper::Parser
+# 1) First define a custom scraper, for example twitter.
+class TwitterScraper < SagroneScraper::Base
   TWITTER_PROFILE_URL = /^https?:\/\/twitter.com\/(\w)+\/?$/i
 
   def self.can_parse?(url)
@@ -97,12 +97,12 @@ end
 # 2) Create an agent scraper, which will give us the page to parse.
 agent = SagroneScraper::Agent.new(url: 'https://twitter.com/Milano_JS')
 
-# 3) Instantiate the parser.
-parser = TwitterParser.new(page: agent.page)
+# 3) Instantiate the scraper.
+scraper = TwitterScraper.new(page: agent.page)
 
 # 4) Parse page and extract attributes.
-parser.parse_page!
-parser.attributes
+scraper.parse_page!
+scraper.attributes
 # => {bio: "Javascript User Group Milano #milanojs", location: "Milan, Italy"}
 ```
 
@@ -113,8 +113,8 @@ This is the simplest way to scrape a web page:
 ```ruby
 require 'sagrone_scraper'
 
-# 1) First we define a custom parser, for example twitter.
-class TwitterParser < SagroneScraper::Parser
+# 1) First we define a custom scraper, for example twitter.
+class TwitterScraper < SagroneScraper::Base
   TWITTER_PROFILE_URL = /^https?:\/\/twitter.com\/(\w)+\/?$/i
 
   def self.can_parse?(url)
@@ -130,9 +130,9 @@ class TwitterParser < SagroneScraper::Parser
   end
 end
 
-# 2) We can query for registered parsers.
-SagroneScraper.registered_parsers
-# => ['TwitterParser']
+# 2) We can query for registered scrapers.
+SagroneScraper.registered_scrapers
+# => ['TwitterScraper']
 
 # 3) We can now scrape twitter profile URLs.
 SagroneScraper.scrape(url: 'https://twitter.com/Milano_JS')

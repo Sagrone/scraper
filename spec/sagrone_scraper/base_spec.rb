@@ -1,38 +1,38 @@
 require 'spec_helper'
-require 'sagrone_scraper/parser'
+require 'sagrone_scraper/base'
 
-RSpec.describe SagroneScraper::Parser do
+RSpec.describe SagroneScraper::Base do
   describe '#initialize' do
     it 'requires a "page" option' do
       expect {
         described_class.new
-      }.to raise_error(SagroneScraper::Parser::Error, 'Option "page" must be provided.')
+      }.to raise_error(SagroneScraper::Base::Error, 'Option "page" must be provided.')
     end
   end
 
   describe 'instance methods' do
     let(:page) { Mechanize::Page.new }
-    let(:parser) { described_class.new(page: page) }
+    let(:scraper) { described_class.new(page: page) }
 
     describe '#page' do
-      it { expect(parser.page).to be_a(Mechanize::Page) }
+      it { expect(scraper.page).to be_a(Mechanize::Page) }
     end
 
     describe '#page_url' do
-      it { expect(parser.page_url).to be }
-      it { expect(parser.page_url).to eq page.uri.to_s }
+      it { expect(scraper.page_url).to be }
+      it { expect(scraper.page_url).to eq page.uri.to_s }
     end
 
     describe '#parse_page!' do
       it do
         expect {
-          parser.parse_page!
+          scraper.parse_page!
         }.to raise_error(NotImplementedError, "Expected #{described_class}.can_parse?(url) to be implemented.")
       end
     end
 
     describe '#attributes' do
-      it { expect(parser.attributes).to be_empty }
+      it { expect(scraper.attributes).to be_empty }
     end
   end
 
@@ -46,13 +46,13 @@ RSpec.describe SagroneScraper::Parser do
     end
   end
 
-  describe 'create custom TwitterParser from SagroneScraper::Parser' do
+  describe 'create custom TwitterScraper from SagroneScraper::Base' do
     before do
       stub_request_for('https://twitter.com/Milano_JS', 'twitter.com:Milano_JS')
     end
 
     let(:page) { Mechanize.new.get('https://twitter.com/Milano_JS') }
-    let(:twitter_parser) { TwitterParser.new(page: page) }
+    let(:twitter_scraper) { TwitterScraper.new(page: page) }
     let(:expected_attributes) do
       {
         bio: "Javascript User Group Milano #milanojs",
@@ -61,23 +61,23 @@ RSpec.describe SagroneScraper::Parser do
     end
 
     describe 'should be able to parse page without errors' do
-      it { expect { twitter_parser.parse_page! }.to_not raise_error }
+      it { expect { twitter_scraper.parse_page! }.to_not raise_error }
     end
 
     it 'should have attributes present after parsing' do
-      twitter_parser.parse_page!
+      twitter_scraper.parse_page!
 
-      expect(twitter_parser.attributes).to_not be_empty
-      expect(twitter_parser.attributes).to eq expected_attributes
+      expect(twitter_scraper.attributes).to_not be_empty
+      expect(twitter_scraper.attributes).to eq expected_attributes
     end
 
     it 'should have correct attributes event if parsing is done multiple times' do
-      twitter_parser.parse_page!
-      twitter_parser.parse_page!
-      twitter_parser.parse_page!
+      twitter_scraper.parse_page!
+      twitter_scraper.parse_page!
+      twitter_scraper.parse_page!
 
-      expect(twitter_parser.attributes).to_not be_empty
-      expect(twitter_parser.attributes).to eq expected_attributes
+      expect(twitter_scraper.attributes).to_not be_empty
+      expect(twitter_scraper.attributes).to eq expected_attributes
     end
   end
 end
