@@ -44,7 +44,7 @@ module SagroneScraper
     end
 
     def self.inherited(klass)
-      SagroneScraper.register_scraper(klass.name)
+      SagroneScraper::Collection.register_scraper(klass.name)
     end
   end
 end

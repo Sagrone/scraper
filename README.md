@@ -141,11 +141,11 @@ class TwitterScraper < SagroneScraper::Base
 end
 
 # 2) We can query for registered scrapers.
-SagroneScraper.registered_scrapers
+SagroneScraper.Collection::registered_scrapers
 # => ['TwitterScraper']
 
 # 3) We can now scrape twitter profile URLs.
-SagroneScraper.scrape(url: 'https://twitter.com/Milano_JS')
+SagroneScraper::Collection.scrape(url: 'https://twitter.com/Milano_JS')
 # => {bio: "Javascript User Group Milano #milanojs", location: "Milan, Italy"}
 ```
 

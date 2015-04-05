@@ -8,6 +8,9 @@
   - `SagroneScraper::Base.parse_page!` renamed to `SagroneScraper::Base.scrape_page!`
   - `SagroneScraper::Base.can_parse?` renamed to `SagroneScraper::Base.can_scrape?`
   - `SagroneScraper::Base` _private_ instance methods are not used for extracting data, only _public_ instance methods are.
+- `SagroneScraper::Collection`:
+  - registeres new created scrappers automatically
+  - knows how to scrape a page from a generic URL (if there is a valid scraper for that URL)
 
 ### 0.0.3
 
