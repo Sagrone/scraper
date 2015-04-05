@@ -69,9 +69,6 @@ RSpec.describe SagroneScraper::Base do
   end
 
   describe 'class methods' do
-    let(:page) { Mechanize.new.get('https://twitter.com/Milano_JS') }
-    let(:twitter_scraper) { TwitterScraper.new(page: page) }
-
     describe 'self.can_scrape?(url)' do
       it 'must be implemented in subclasses' do
         expect {
@@ -79,8 +76,53 @@ RSpec.describe SagroneScraper::Base do
         }.to raise_error(NotImplementedError, "Expected #{described_class}.can_scrape?(url) to be implemented.")
       end
     end
+  end
 
-    describe 'example TwitterScraper' do
+  describe 'example TwitterScraper' do
+    before do
+      stub_request_for('https://twitter.com/Milano_JS', 'twitter.com:Milano_JS')
+    end
+
+    let(:page) { Mechanize.new.get('https://twitter.com/Milano_JS') }
+    let(:twitter_scraper) { TwitterScraper.new(page: page) }
+    let(:expected_attributes) do
+      {
+        bio: "Javascript User Group Milano #milanojs",
+        location: "Milan, Italy"
+      }
+    end
+
+    describe '#initialize' do
+      it 'should be a SagroneScraper::Base' do
+        expect(twitter_scraper).to be_a(described_class)
+      end
+    end
+
+    describe 'instance methods' do
+      describe '#scrape_page!' do
+        it 'should succeed' do
+          expect { twitter_scraper.scrape_page! }.to_not raise_error
+        end
+
+        it 'should have attributes present after scraping' do
+          twitter_scraper.scrape_page!
+
+          expect(twitter_scraper.attributes).to_not be_empty
+          expect(twitter_scraper.attributes).to eq expected_attributes
+        end
+
+        it 'should have correct attributes even if scraping is done multiple times' do
+          twitter_scraper.scrape_page!
+          twitter_scraper.scrape_page!
+          twitter_scraper.scrape_page!
+
+          expect(twitter_scraper.attributes).to_not be_empty
+          expect(twitter_scraper.attributes).to eq expected_attributes
+        end
+      end
+    end
+
+    describe 'class methods' do
       describe 'self.can_scrape?(url)' do
         it 'should be true for scrapable URLs' do
           can_scrape = TwitterScraper.can_scrape?('https://twitter.com/Milano_JS')
@@ -115,41 +157,6 @@ RSpec.describe SagroneScraper::Base do
           end
         end
       end
-    end
-  end
-
-  describe 'create custom TwitterScraper from SagroneScraper::Base' do
-    before do
-      stub_request_for('https://twitter.com/Milano_JS', 'twitter.com:Milano_JS')
-    end
-
-    let(:page) { Mechanize.new.get('https://twitter.com/Milano_JS') }
-    let(:twitter_scraper) { TwitterScraper.new(page: page) }
-    let(:expected_attributes) do
-      {
-        bio: "Javascript User Group Milano #milanojs",
-        location: "Milan, Italy"
-      }
-    end
-
-    describe 'should be able to scrape page without errors' do
-      it { expect { twitter_scraper.scrape_page! }.to_not raise_error }
-    end
-
-    it 'should have attributes present after parsing' do
-      twitter_scraper.scrape_page!
-
-      expect(twitter_scraper.attributes).to_not be_empty
-      expect(twitter_scraper.attributes).to eq expected_attributes
-    end
-
-    it 'should have correct attributes even if parsing is done multiple times' do
-      twitter_scraper.scrape_page!
-      twitter_scraper.scrape_page!
-      twitter_scraper.scrape_page!
-
-      expect(twitter_scraper.attributes).to_not be_empty
-      expect(twitter_scraper.attributes).to eq expected_attributes
     end
   end
 end
