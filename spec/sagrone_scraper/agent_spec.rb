@@ -12,7 +12,7 @@ RSpec.describe SagroneScraper::Agent do
     it { expect(described_class::AGENT_ALIASES).to eq(user_agent_aliases) }
   end
 
-  describe '.http_client' do
+  describe 'self.http_client' do
     subject { described_class.http_client }
 
     it { should be_a(Mechanize) }

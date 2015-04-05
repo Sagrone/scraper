@@ -2,7 +2,7 @@ require 'spec_helper'
 require 'sagrone_scraper'
 
 RSpec.describe SagroneScraper do
-  describe '.version' do
+  describe 'self.version' do
     it { expect(SagroneScraper.version).to be_a(String) }
   end
 
@@ -11,12 +11,12 @@ RSpec.describe SagroneScraper do
       described_class.registered_scrapers.clear
     end
 
-    describe '.registered_scrapers' do
+    describe 'self.registered_scrapers' do
       it { expect(described_class.registered_scrapers).to be_empty }
       it { expect(described_class.registered_scrapers).to be_a(Array) }
     end
 
-    describe '.register_scraper(name)' do
+    describe 'self.register_scraper(name)' do
       it 'should add a new scraper class to registered scrapers automatically' do
         class ScraperOne < SagroneScraper::Base ; end
         class ScraperTwo < SagroneScraper::Base ; end
@@ -52,7 +52,7 @@ RSpec.describe SagroneScraper do
     end
   end
 
-  describe '.scrape' do
+  describe 'self.scrape' do
     before do
       SagroneScraper.registered_scrapers.clear
       SagroneScraper.register_scraper('TwitterScraper')
@@ -60,7 +60,7 @@ RSpec.describe SagroneScraper do
       stub_request_for('https://twitter.com/Milano_JS', 'twitter.com:Milano_JS')
     end
 
-    it 'should `url` option' do
+    it 'should require `url` option' do
       expect {
         described_class.scrape({})
       }.to raise_error(SagroneScraper::Error, 'Option "url" must be provided.')

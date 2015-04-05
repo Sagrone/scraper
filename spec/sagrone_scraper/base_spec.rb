@@ -37,7 +37,7 @@ RSpec.describe SagroneScraper::Base do
   end
 
   describe 'class methods' do
-    describe '.can_scrape?(url)' do
+    describe 'self.can_scrape?(url)' do
       it do
         expect {
           described_class.can_scrape?('url')
