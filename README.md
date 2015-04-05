@@ -12,6 +12,10 @@ Simple library to scrap web pages. Bellow you will find information on [how to u
 - [Modules](#modules)
   + [`SagroneScraper::Agent`](#sagronescraperagent)
   + [`SagroneScraper::Base`](#sagronescraperbase)
+    * [Create a scraper class](#create-a-scraper-class)
+    * [Instantiate the scraper](#instantiate-the-scraper)
+    * [Scrape the page](#scrape-the-page)
+    * [Extract the data](#extract-the-data)
   + [`SagroneScraper::Collection`](#sagronescrapercollection)
 
 ## Installation
@@ -30,7 +34,7 @@ Or install it yourself as:
 
 ## Basic Usage
 
-Comming soon...
+In order to scrap a web page you need to [create a new scraper class](#create-a-scraper-class) by inheriting from `SagroneScraper::Base` and [instantiate it with a `url` or `page`](#instantiate-the-scraper). Then you can [scrape the page](#scrape-the-page) and [extract the data](#extract-the-data). More informations at [`SagroneScraper::Base`](#sagronescraperbase) module.
 
 ## Modules
 
@@ -57,10 +61,11 @@ The _scraper_ is responsible for extracting structured data from a _page_ or a _
 
 _Public_ instance methods will be used to extract data, whereas _private_ instance methods will be ignored (seen as helper methods). Most importantly `self.can_scrape?(url)` class method ensures that only a known subset of pages can be scraped for data.
 
+###### Create a scraper class
+
 ```ruby
 require 'sagrone_scraper'
 
-# 1) Create a scraper class.
 class TwitterScraper < SagroneScraper::Base
   TWITTER_PROFILE_URL = /^https?:\/\/twitter.com\/(\w)+\/?$/i
 
@@ -86,18 +91,28 @@ class TwitterScraper < SagroneScraper::Base
     page.at(selector).text if page.at(selector)
   end
 end
+```
 
-# 2a) Instantiate the scraper with a "url".
+###### Instantiate the scraper
+
+```ruby
+# Instantiate the scraper with a "url".
 scraper = TwitterScraper.new(url: 'https://twitter.com/Milano_JS')
 
-# 2b) Instantiate the scraper with a "page" (Mechanize::Page).
+# Instantiate the scraper with a "page" (Mechanize::Page).
 agent = SagroneScraper::Agent.new(url: 'https://twitter.com/Milano_JS')
 scraper = TwitterScraper.new(page: agent.page)
+```
 
-# 3) Scrape the page.
+###### Scrape the page
+
+```ruby
 scraper.scrape_page!
+```
 
-# 4) Extract the data.
+###### Extract the data
+
+```ruby
 scraper.attributes
 # => {bio: "Javascript User Group Milano #milanojs", location: "Milan, Italy"}
 ```
