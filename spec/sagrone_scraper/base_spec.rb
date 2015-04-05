@@ -37,11 +37,26 @@ RSpec.describe SagroneScraper::Base do
   end
 
   describe 'class methods' do
+    let(:page) { Mechanize.new.get('https://twitter.com/Milano_JS') }
+    let(:twitter_scraper) { TwitterScraper.new(page: page) }
+
     describe 'self.can_scrape?(url)' do
-      it do
+      it 'must be implemented in subclasses' do
         expect {
           described_class.can_scrape?('url')
         }.to raise_error(NotImplementedError, "Expected #{described_class}.can_scrape?(url) to be implemented.")
+      end
+
+      it 'should be true for scrapable URLs' do
+        can_scrape = TwitterScraper.can_scrape?('https://twitter.com/Milano_JS')
+
+        expect(can_scrape).to eq(true)
+      end
+
+      it 'should be false for unknown URLs' do
+        can_scrape = TwitterScraper.can_scrape?('https://www.facebook.com/milanojavascript')
+
+        expect(can_scrape).to eq(false)
       end
     end
   end
