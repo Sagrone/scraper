@@ -3,11 +3,11 @@ require 'sagrone_scraper/base'
 
 RSpec.describe SagroneScraper::Base do
   describe '#initialize' do
-    describe 'should require exactly one of `url` or `page` option' do
-      before do
-        stub_request_for('http://example.com', 'www.example.com')
-      end
+    before do
+      stub_request_for('http://example.com', 'www.example.com')
+    end
 
+    describe 'should require exactly one of `url` or `page` option' do
       it 'when options is empty' do
         expect {
           described_class.new
@@ -26,10 +26,6 @@ RSpec.describe SagroneScraper::Base do
     end
 
     describe 'with page option' do
-      before do
-        stub_request_for('http://example.com', 'www.example.com')
-      end
-
       let(:page) { Mechanize.new.get('http://example.com') }
       let(:agent) { described_class.new(page: page) }
 
@@ -39,10 +35,6 @@ RSpec.describe SagroneScraper::Base do
     end
 
     describe 'with url option' do
-      before do
-        stub_request_for('http://example.com', 'www.example.com')
-      end
-
       let(:agent) { described_class.new(url: 'http://example.com') }
 
       it { expect { agent }.to_not raise_error }
