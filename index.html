@@ -76,9 +76,9 @@
 <h2>
 <a id="modules" class="anchor" href="#modules" aria-hidden="true"><span class="octicon octicon-link"></span></a>Modules</h2>
 
-<h4>
+<h3>
 <a id="sagronescraperagent" class="anchor" href="#sagronescraperagent" aria-hidden="true"><span class="octicon octicon-link"></span></a><code>SagroneScraper::Agent</code>
-</h4>
+</h3>
 
 <p>The agent is responsible for obtaining a page, <code>Mechanize::Page</code>, from a URL. Here is how you can create an <code>agent</code>:</p>
 
@@ -91,9 +91,9 @@ agent.page
 agent.page.at(<span class="pl-s"><span class="pl-pds">'</span>.ProfileHeaderCard-bio<span class="pl-pds">'</span></span>).text
 <span class="pl-c"># =&gt; "Javascript User Group Milano #milanojs"</span></pre></div>
 
-<h4>
+<h3>
 <a id="sagronescraperbase" class="anchor" href="#sagronescraperbase" aria-hidden="true"><span class="octicon octicon-link"></span></a><code>SagroneScraper::Base</code>
-</h4>
+</h3>
 
 <p>Here we define a <code>TwitterScraper</code>, by inheriting from <code>SagroneScraper::Base</code> class.</p>
 
@@ -101,8 +101,8 @@ agent.page.at(<span class="pl-s"><span class="pl-pds">'</span>.ProfileHeaderCard
 
 <p><em>Public</em> instance methods will be used to extract data, whereas <em>private</em> instance methods will be ignored (seen as helper methods). Most importantly <code>self.can_scrape?(url)</code> class method ensures that only a known subset of pages can be scraped for data.</p>
 
-<h6>
-<a id="create-a-scraper-class" class="anchor" href="#create-a-scraper-class" aria-hidden="true"><span class="octicon octicon-link"></span></a>Create a scraper class</h6>
+<h4>
+<a id="create-a-scraper-class" class="anchor" href="#create-a-scraper-class" aria-hidden="true"><span class="octicon octicon-link"></span></a>Create a scraper class</h4>
 
 <div class="highlight highlight-ruby"><pre><span class="pl-k">require</span> <span class="pl-s"><span class="pl-pds">'</span>sagrone_scraper<span class="pl-pds">'</span></span>
 
@@ -132,8 +132,8 @@ agent.page.at(<span class="pl-s"><span class="pl-pds">'</span>.ProfileHeaderCard
   <span class="pl-k">end</span>
 <span class="pl-k">end</span></pre></div>
 
-<h6>
-<a id="instantiate-the-scraper" class="anchor" href="#instantiate-the-scraper" aria-hidden="true"><span class="octicon octicon-link"></span></a>Instantiate the scraper</h6>
+<h4>
+<a id="instantiate-the-scraper" class="anchor" href="#instantiate-the-scraper" aria-hidden="true"><span class="octicon octicon-link"></span></a>Instantiate the scraper</h4>
 
 <div class="highlight highlight-ruby"><pre><span class="pl-c"># Instantiate the scraper with a "url".</span>
 scraper <span class="pl-k">=</span> <span class="pl-c1">TwitterScraper</span>.<span class="pl-k">new</span>(<span class="pl-c1">url:</span> <span class="pl-s"><span class="pl-pds">'</span>https://twitter.com/Milano_JS<span class="pl-pds">'</span></span>)
@@ -142,20 +142,20 @@ scraper <span class="pl-k">=</span> <span class="pl-c1">TwitterScraper</span>.<s
 agent <span class="pl-k">=</span> <span class="pl-c1">SagroneScraper</span>::<span class="pl-c1">Agent</span>.<span class="pl-k">new</span>(<span class="pl-c1">url:</span> <span class="pl-s"><span class="pl-pds">'</span>https://twitter.com/Milano_JS<span class="pl-pds">'</span></span>)
 scraper <span class="pl-k">=</span> <span class="pl-c1">TwitterScraper</span>.<span class="pl-k">new</span>(<span class="pl-c1">page:</span> agent.page)</pre></div>
 
-<h6>
-<a id="scrape-the-page" class="anchor" href="#scrape-the-page" aria-hidden="true"><span class="octicon octicon-link"></span></a>Scrape the page</h6>
+<h4>
+<a id="scrape-the-page" class="anchor" href="#scrape-the-page" aria-hidden="true"><span class="octicon octicon-link"></span></a>Scrape the page</h4>
 
 <div class="highlight highlight-ruby"><pre>scraper.scrape_page!</pre></div>
 
-<h6>
-<a id="extract-the-data" class="anchor" href="#extract-the-data" aria-hidden="true"><span class="octicon octicon-link"></span></a>Extract the data</h6>
+<h4>
+<a id="extract-the-data" class="anchor" href="#extract-the-data" aria-hidden="true"><span class="octicon octicon-link"></span></a>Extract the data</h4>
 
 <div class="highlight highlight-ruby"><pre>scraper.attributes
 <span class="pl-c"># =&gt; {bio: "Javascript User Group Milano #milanojs", location: "Milan, Italy"}</span></pre></div>
 
-<h4>
+<h3>
 <a id="sagronescrapercollection" class="anchor" href="#sagronescrapercollection" aria-hidden="true"><span class="octicon octicon-link"></span></a><code>SagroneScraper::Collection</code>
-</h4>
+</h3>
 
 <p>This is the simplest way to scrape a web page:</p>
 
