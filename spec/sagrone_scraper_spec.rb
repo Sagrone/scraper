@@ -66,7 +66,7 @@ RSpec.describe SagroneScraper do
       }.to raise_error(SagroneScraper::Error, 'Option "url" must be provided.')
     end
 
-    it 'should scrape URL if registered scraper knows how to parse it' do
+    it 'should scrape URL if registered scraper knows how to scrape it' do
       expected_attributes = {
         bio: "Javascript User Group Milano #milanojs",
         location: "Milan, Italy"
@@ -75,10 +75,10 @@ RSpec.describe SagroneScraper do
       expect(described_class.scrape(url: 'https://twitter.com/Milano_JS')).to eq(expected_attributes)
     end
 
-    it 'should return raise error if no registered paser can parse the URL' do
+    it 'should return raise error if no registered paser can scrape the URL' do
       expect {
         described_class.scrape(url: 'https://twitter.com/Milano_JS/media')
-      }.to raise_error(SagroneScraper::Error, "No registed scraper can parse URL https://twitter.com/Milano_JS/media")
+      }.to raise_error(SagroneScraper::Error, "No registed scraper can scrape URL https://twitter.com/Milano_JS/media")
     end
   end
 end

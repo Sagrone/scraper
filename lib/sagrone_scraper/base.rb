@@ -15,8 +15,8 @@ module SagroneScraper
       @attributes = {}
     end
 
-    def parse_page!
-      return unless self.class.can_parse?(page_url)
+    def scrape_page!
+      return unless self.class.can_scrape?(page_url)
 
       self.class.method_names.each do |name|
         attributes[name] = send(name)
@@ -24,8 +24,8 @@ module SagroneScraper
       nil
     end
 
-    def self.can_parse?(url)
-      class_with_method = "#{self}.can_parse?(url)"
+    def self.can_scrape?(url)
+      class_with_method = "#{self}.can_scrape?(url)"
       raise NotImplementedError.new("Expected #{class_with_method} to be implemented.")
     end
 

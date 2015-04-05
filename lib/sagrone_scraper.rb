@@ -30,13 +30,13 @@ module SagroneScraper
 
     scraper_class = registered_scrapers
                     .map { |scraper_name| Object.const_get(scraper_name) }
-                    .find { |a_scraper_class| a_scraper_class.can_parse?(url) }
+                    .find { |a_scraper_class| a_scraper_class.can_scrape?(url) }
 
-    raise Error.new("No registed scraper can parse URL #{url}") unless scraper_class
+    raise Error.new("No registed scraper can scrape URL #{url}") unless scraper_class
 
     agent = SagroneScraper::Agent.new(url: url)
     scraper = scraper_class.new(page: agent.page)
-    scraper.parse_page!
+    scraper.scrape_page!
     scraper.attributes
   end
 end

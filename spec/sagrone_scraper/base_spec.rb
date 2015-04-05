@@ -23,11 +23,11 @@ RSpec.describe SagroneScraper::Base do
       it { expect(scraper.page_url).to eq page.uri.to_s }
     end
 
-    describe '#parse_page!' do
+    describe '#scrape_page!' do
       it do
         expect {
-          scraper.parse_page!
-        }.to raise_error(NotImplementedError, "Expected #{described_class}.can_parse?(url) to be implemented.")
+          scraper.scrape_page!
+        }.to raise_error(NotImplementedError, "Expected #{described_class}.can_scrape?(url) to be implemented.")
       end
     end
 
@@ -37,11 +37,11 @@ RSpec.describe SagroneScraper::Base do
   end
 
   describe 'class methods' do
-    describe '.can_parse?(url)' do
+    describe '.can_scrape?(url)' do
       it do
         expect {
-          described_class.can_parse?('url')
-        }.to raise_error(NotImplementedError, "Expected #{described_class}.can_parse?(url) to be implemented.")
+          described_class.can_scrape?('url')
+        }.to raise_error(NotImplementedError, "Expected #{described_class}.can_scrape?(url) to be implemented.")
       end
     end
   end
@@ -60,21 +60,21 @@ RSpec.describe SagroneScraper::Base do
       }
     end
 
-    describe 'should be able to parse page without errors' do
-      it { expect { twitter_scraper.parse_page! }.to_not raise_error }
+    describe 'should be able to scrape page without errors' do
+      it { expect { twitter_scraper.scrape_page! }.to_not raise_error }
     end
 
     it 'should have attributes present after parsing' do
-      twitter_scraper.parse_page!
+      twitter_scraper.scrape_page!
 
       expect(twitter_scraper.attributes).to_not be_empty
       expect(twitter_scraper.attributes).to eq expected_attributes
     end
 
     it 'should have correct attributes event if parsing is done multiple times' do
-      twitter_scraper.parse_page!
-      twitter_scraper.parse_page!
-      twitter_scraper.parse_page!
+      twitter_scraper.scrape_page!
+      twitter_scraper.scrape_page!
+      twitter_scraper.scrape_page!
 
       expect(twitter_scraper.attributes).to_not be_empty
       expect(twitter_scraper.attributes).to eq expected_attributes

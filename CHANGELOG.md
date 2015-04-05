@@ -5,6 +5,8 @@
   - `SagroneScraper::Base` is base class to create new scrapers
   - `SagroneScraper.registered_parsers` is now `SagroneScraper.registered_scrapers`
   - `SagroneScraper.register_parser` is now `SagroneScraper.register_scraper`
+  - `SagroneScraper::Base.parse_page!` renamed to `SagroneScraper::Base.scrape_page!`
+  - `SagroneScraper::Base.can_parse?` renamed to `SagroneScraper::Base.can_scrape?`
 
 ### 0.0.3
 

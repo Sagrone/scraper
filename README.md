@@ -81,7 +81,7 @@ require 'sagrone_scraper'
 class TwitterScraper < SagroneScraper::Base
   TWITTER_PROFILE_URL = /^https?:\/\/twitter.com\/(\w)+\/?$/i
 
-  def self.can_parse?(url)
+  def self.can_scrape?(url)
     url.match(TWITTER_PROFILE_URL)
   end
 
@@ -94,14 +94,14 @@ class TwitterScraper < SagroneScraper::Base
   end
 end
 
-# 2) Create an agent scraper, which will give us the page to parse.
+# 2) Create an agent scraper, which will give us the page to scrape.
 agent = SagroneScraper::Agent.new(url: 'https://twitter.com/Milano_JS')
 
 # 3) Instantiate the scraper.
 scraper = TwitterScraper.new(page: agent.page)
 
-# 4) Parse page and extract attributes.
-scraper.parse_page!
+# 4) Scrape page and extract attributes.
+scraper.scrape_page!
 scraper.attributes
 # => {bio: "Javascript User Group Milano #milanojs", location: "Milan, Italy"}
 ```
@@ -117,7 +117,7 @@ require 'sagrone_scraper'
 class TwitterScraper < SagroneScraper::Base
   TWITTER_PROFILE_URL = /^https?:\/\/twitter.com\/(\w)+\/?$/i
 
-  def self.can_parse?(url)
+  def self.can_scrape?(url)
     url.match(TWITTER_PROFILE_URL)
   end
 
