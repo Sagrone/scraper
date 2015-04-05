@@ -21,7 +21,7 @@ RSpec.describe SagroneScraper::Agent do
   end
 
   describe '#initialize' do
-    describe 'should require exactly one of `url` or `page` option' do
+    describe 'should require `url` option' do
       before do
         stub_request_for('http://example.com', 'www.example.com')
       end
@@ -30,30 +30,21 @@ RSpec.describe SagroneScraper::Agent do
         expect {
           described_class.new
         }.to raise_error(SagroneScraper::Agent::Error,
-                          'Exactly one option must be provided: "url" or "page"')
-      end
-
-      it 'when both options are present' do
-        page = Mechanize.new.get('http://example.com')
-
-        expect {
-          described_class.new(url: 'http://example.com', page: page)
-        }.to raise_error(SagroneScraper::Agent::Error,
-                          'Exactly one option must be provided: "url" or "page"')
+                          'Option "url" must be provided')
       end
     end
 
-    describe 'with page option' do
+    describe 'with url option' do
       before do
         stub_request_for('http://example.com', 'www.example.com')
       end
 
-      let(:page) { Mechanize.new.get('http://example.com') }
-      let(:agent) { described_class.new(page: page) }
+      let(:agent) { described_class.new(url: 'http://example.com') }
 
       it { expect { agent }.to_not raise_error }
       it { expect(agent.page).to be }
-      it { expect(agent.url).to eq 'http://example.com/' }
+      it { expect(agent.page).to be_a(Mechanize::Page) }
+      it { expect(agent.url).to eq 'http://example.com' }
     end
 
     describe 'with invalid URL' do
@@ -62,7 +53,7 @@ RSpec.describe SagroneScraper::Agent do
       it 'should require URL is absolute' do
         @invalid_url = 'not-a-url'
 
-        expect { agent }.to raise_error(SagroneScraper::Agent::Error,
+        expect { agent }.to raise_error(described_class::Error,
                                         'absolute URL needed (not not-a-url)')
       end
 
@@ -70,7 +61,7 @@ RSpec.describe SagroneScraper::Agent do
         @invalid_url = 'http://'
 
         webmock_allow do
-          expect { agent }.to raise_error(SagroneScraper::Agent::Error,
+          expect { agent }.to raise_error(described_class::Error,
                                           /bad URI\(absolute but no path\)/)
         end
       end
@@ -79,7 +70,7 @@ RSpec.describe SagroneScraper::Agent do
         @invalid_url = 'http://example'
 
         webmock_allow do
-          expect { agent }.to raise_error(SagroneScraper::Agent::Error,
+          expect { agent }.to raise_error(described_class::Error,
                                           /getaddrinfo/)
         end
       end

@@ -11,6 +11,8 @@
 - `SagroneScraper::Collection`:
   - registeres new created scrappers automatically
   - knows how to scrape a page from a generic URL (if there is a valid scraper for that URL)
+- `SagroneScraper::Base` takes exactly one of `url` or `page` options
+- `SagroneScraper::Agent` takes only a `url` option
 
 ### 0.0.3
 

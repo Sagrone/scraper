@@ -3,10 +3,51 @@ require 'sagrone_scraper/base'
 
 RSpec.describe SagroneScraper::Base do
   describe '#initialize' do
-    it 'requires a "page" option' do
-      expect {
-        described_class.new
-      }.to raise_error(SagroneScraper::Base::Error, 'Option "page" must be provided.')
+    describe 'should require exactly one of `url` or `page` option' do
+      before do
+        stub_request_for('http://example.com', 'www.example.com')
+      end
+
+      it 'when options is empty' do
+        expect {
+          described_class.new
+        }.to raise_error(described_class::Error,
+                          'Exactly one option must be provided: "url" or "page"')
+      end
+
+      it 'when both options are present' do
+        page = Mechanize.new.get('http://example.com')
+
+        expect {
+          described_class.new(url: 'http://example.com', page: page)
+        }.to raise_error(described_class::Error,
+                          'Exactly one option must be provided: "url" or "page"')
+      end
+    end
+
+    describe 'with page option' do
+      before do
+        stub_request_for('http://example.com', 'www.example.com')
+      end
+
+      let(:page) { Mechanize.new.get('http://example.com') }
+      let(:agent) { described_class.new(page: page) }
+
+      it { expect { agent }.to_not raise_error }
+      it { expect(agent.page).to be }
+      it { expect(agent.url).to eq 'http://example.com/' }
+    end
+
+    describe 'with url option' do
+      before do
+        stub_request_for('http://example.com', 'www.example.com')
+      end
+
+      let(:agent) { described_class.new(url: 'http://example.com') }
+
+      it { expect { agent }.to_not raise_error }
+      it { expect(agent.page).to be }
+      it { expect(agent.url).to eq 'http://example.com' }
     end
   end
 
@@ -18,9 +59,8 @@ RSpec.describe SagroneScraper::Base do
       it { expect(scraper.page).to be_a(Mechanize::Page) }
     end
 
-    describe '#page_url' do
-      it { expect(scraper.page_url).to be }
-      it { expect(scraper.page_url).to eq page.uri.to_s }
+    describe '#url' do
+      it { expect(scraper.url).to eq page.uri.to_s }
     end
 
     describe '#scrape_page!' do
@@ -46,7 +86,6 @@ RSpec.describe SagroneScraper::Base do
           described_class.can_scrape?('url')
         }.to raise_error(NotImplementedError, "Expected #{described_class}.can_scrape?(url) to be implemented.")
       end
-
     end
 
     describe 'example TwitterScraper' do
@@ -112,7 +151,7 @@ RSpec.describe SagroneScraper::Base do
       expect(twitter_scraper.attributes).to eq expected_attributes
     end
 
-    it 'should have correct attributes event if parsing is done multiple times' do
+    it 'should have correct attributes even if parsing is done multiple times' do
       twitter_scraper.scrape_page!
       twitter_scraper.scrape_page!
       twitter_scraper.scrape_page!
