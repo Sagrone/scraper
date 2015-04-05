@@ -47,36 +47,41 @@ RSpec.describe SagroneScraper::Base do
         }.to raise_error(NotImplementedError, "Expected #{described_class}.can_scrape?(url) to be implemented.")
       end
 
-      it 'should be true for scrapable URLs' do
-        can_scrape = TwitterScraper.can_scrape?('https://twitter.com/Milano_JS')
-
-        expect(can_scrape).to eq(true)
-      end
-
-      it 'should be false for unknown URLs' do
-        can_scrape = TwitterScraper.can_scrape?('https://www.facebook.com/milanojavascript')
-
-        expect(can_scrape).to eq(false)
-      end
     end
 
-    describe 'self.should_ignore_method?(name)' do
-      let(:private_methods) { %w(text_at) }
-      let(:public_methods) { %w(bio location) }
+    describe 'example TwitterScraper' do
+      describe 'self.can_scrape?(url)' do
+        it 'should be true for scrapable URLs' do
+          can_scrape = TwitterScraper.can_scrape?('https://twitter.com/Milano_JS')
 
-      it 'ignores private methods' do
-        private_methods.each do |private_method|
-          ignored = TwitterScraper.should_ignore_method?(private_method)
+          expect(can_scrape).to eq(true)
+        end
 
-          expect(ignored).to eq(true)
+        it 'should be false for unknown URLs' do
+          can_scrape = TwitterScraper.can_scrape?('https://www.facebook.com/milanojavascript')
+
+          expect(can_scrape).to eq(false)
         end
       end
 
-      it 'allows public methods' do
-        public_methods.each do |public_method|
-          ignored = TwitterScraper.should_ignore_method?(public_method)
+      describe 'self.should_ignore_method?(name)' do
+        let(:private_methods) { %w(text_at) }
+        let(:public_methods) { %w(bio location) }
 
-          expect(ignored).to eq(false)
+        it 'ignores private methods' do
+          private_methods.each do |private_method|
+            ignored = TwitterScraper.should_ignore_method?(private_method)
+
+            expect(ignored).to eq(true)
+          end
+        end
+
+        it 'allows public methods' do
+          public_methods.each do |public_method|
+            ignored = TwitterScraper.should_ignore_method?(public_method)
+
+            expect(ignored).to eq(false)
+          end
         end
       end
     end
