@@ -12,7 +12,7 @@ Simple library to scrap web pages. Bellow you will find information on [how to u
 - [Modules](#modules)
   + [`SagroneScraper::Agent`](#sagronescraperagent)
   + [`SagroneScraper::Base`](#sagronescraperbase)
-  + [`SagroneScraper.scrape`](#sagronescraperscrape)
+  + [`SagroneScraper::Collection.scrape`](#sagronescrapercollectionscrape)
 
 ## Installation
 
@@ -106,7 +106,7 @@ scraper.attributes
 # => {bio: "Javascript User Group Milano #milanojs", location: "Milan, Italy"}
 ```
 
-#### `SagroneScraper.scrape`
+#### `SagroneScraper::Collection.scrape`
 
 This is the simplest way to scrape a web page:
 
