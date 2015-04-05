@@ -12,7 +12,7 @@ Simple library to scrap web pages. Bellow you will find information on [how to u
 - [Modules](#modules)
   + [`SagroneScraper::Agent`](#sagronescraperagent)
   + [`SagroneScraper::Base`](#sagronescraperbase)
-  + [`SagroneScraper::Collection.scrape`](#sagronescrapercollectionscrape)
+  + [`SagroneScraper::Collection`](#sagronescrapercollection)
 
 ## Installation
 
@@ -65,7 +65,7 @@ class TwitterScraper < SagroneScraper::Base
   TWITTER_PROFILE_URL = /^https?:\/\/twitter.com\/(\w)+\/?$/i
 
   def self.can_scrape?(url)
-    url.match(TWITTER_PROFILE_URL)
+    url.match(TWITTER_PROFILE_URL) ? true : false
   end
 
   # Public instance methods are used for data extraction.
@@ -94,7 +94,7 @@ scraper = TwitterScraper.new(url: 'https://twitter.com/Milano_JS')
 agent = SagroneScraper::Agent.new(url: 'https://twitter.com/Milano_JS')
 scraper = TwitterScraper.new(page: agent.page)
 
-# 3) Scrape the page and extract attributes.
+# 3) Scrape the page.
 scraper.scrape_page!
 
 # 4) Extract the data.
@@ -102,7 +102,7 @@ scraper.attributes
 # => {bio: "Javascript User Group Milano #milanojs", location: "Milan, Italy"}
 ```
 
-#### `SagroneScraper::Collection.scrape`
+#### `SagroneScraper::Collection`
 
 This is the simplest way to scrape a web page:
 
@@ -111,11 +111,11 @@ require 'sagrone_scraper'
 
 # 1) Define a scraper. For example, the TwitterScraper above.
 
-# 2) We can query for registered scrapers.
+# 2) New created scrapers will be registered.
 SagroneScraper.Collection::registered_scrapers
 # => ['TwitterScraper']
 
-# 3) We can now scrape twitter profile URLs.
+# 3) Here we use the collection to scrape data at a URL.
 SagroneScraper::Collection.scrape(url: 'https://twitter.com/Milano_JS')
 # => {bio: "Javascript User Group Milano #milanojs", location: "Milan, Italy"}
 ```
