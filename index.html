@@ -22,6 +22,9 @@
       <h1>
 <a id="sagrone-scraper" class="anchor" href="#sagrone-scraper" aria-hidden="true"><span class="octicon octicon-link"></span></a>Sagrone scraper</h1>
 
+<p><a href="http://badge.fury.io/rb/sagrone_scraper"><img src="https://badge.fury.io/rb/sagrone_scraper.svg" alt="Gem Version"></a>
+<a href="https://travis-ci.org/Sagrone/scraper"><img src="https://travis-ci.org/Sagrone/scraper.svg?branch=master" alt="Build Status"></a></p>
+
 <p>Simple library to scrap web pages. Bellow you will find information on <a href="#basic-usage">how to use it</a>.</p>
 
 <h2>
@@ -71,7 +74,17 @@
 <h2>
 <a id="basic-usage" class="anchor" href="#basic-usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Basic Usage</h2>
 
-<p>In order to scrap a web page you need to <a href="#create-a-scraper-class">create a new scraper class</a> by inheriting from <code>SagroneScraper::Base</code> and <a href="#instantiate-the-scraper">instantiate it with a <code>url</code> or <code>page</code></a>. Then you can <a href="#scrape-the-page">scrape the page</a> and <a href="#extract-the-data">extract the data</a>. More informations at <a href="#sagronescraperbase"><code>SagroneScraper::Base</code></a> module.</p>
+<p>In order to <em>scrape a web page</em> you will need to:</p>
+
+<ol>
+<li>
+<a href="#create-a-scraper-class">create a new scraper class</a> by inheriting from <code>SagroneScraper::Base</code>, and</li>
+<li><a href="#instantiate-the-scraper">instantiate it with a <code>url</code> or <code>page</code></a></li>
+<li>then you can use the scraper instance to <a href="#scrape-the-page">scrape the page</a> and <a href="#extract-the-data">extract structured data</a>
+</li>
+</ol>
+
+<p>More informations at <a href="#sagronescraperbase"><code>SagroneScraper::Base</code></a> module.</p>
 
 <h2>
 <a id="modules" class="anchor" href="#modules" aria-hidden="true"><span class="octicon octicon-link"></span></a>Modules</h2>
