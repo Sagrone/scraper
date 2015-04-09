@@ -34,7 +34,13 @@ Or install it yourself as:
 
 ## Basic Usage
 
-In order to scrap a web page you need to [create a new scraper class](#create-a-scraper-class) by inheriting from `SagroneScraper::Base` and [instantiate it with a `url` or `page`](#instantiate-the-scraper). Then you can [scrape the page](#scrape-the-page) and [extract the data](#extract-the-data). More informations at [`SagroneScraper::Base`](#sagronescraperbase) module.
+In order to _scrape a web page_ you will need to:
+
+1. [create a new scraper class](#create-a-scraper-class) by inheriting from `SagroneScraper::Base`, and
+2. [instantiate it with a `url` or `page`](#instantiate-the-scraper)
+3. then you can use the scraper instance to [scrape the page](#scrape-the-page) and [extract structured data](#extract-the-data)
+
+More informations at [`SagroneScraper::Base`](#sagronescraperbase) module.
 
 ## Modules
 
