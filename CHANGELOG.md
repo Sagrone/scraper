@@ -1,5 +1,7 @@
 ### HEAD
 
+### 0.1.0
+
 - simplify library entities:
   - `SagroneScraper::Parser` is now `SagroneScraper::Base`
   - `SagroneScraper::Base` is base class to create new scrapers
